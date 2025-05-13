@@ -228,7 +228,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "", 
+        "name": "imageDescription", 
         "label": "Image Description"
       },
       {
