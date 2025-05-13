@@ -214,5 +214,40 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "tabbed-content",
+    "fields": [
+      {
+        "component": "text",
+        "name": "name",
+        "label": "Component Name",
+        "description": "The label shown for this component in the Content Tree"
+      },
+      {
+        "component": "multifield",
+        "name": "tabs",
+        "label": "Tabs",
+        "items": [
+          {
+            "component": "text",
+            "name": "tabTitle",
+            "label": "Tab Title"
+          },
+          {
+            "component": "richtext",
+            "name": "tabContent",
+            "label": "Tab Content"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "backgroundImage",
+        "label": "Background Image",
+        "multi": false
+      }
+    ]
   }
 ]

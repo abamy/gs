@@ -1,0 +1,142 @@
+.tabbed-content-container {
+    width: 100%;
+    margin: 2rem 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .tabbed-content-nav {
+    display: flex;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  
+  .tabbed-content-nav::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .tab-button {
+    background: none;
+    border: none;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    color: #666;
+    transition: color 0.3s;
+  }
+  
+  .tab-button:hover {
+    color: #0066cc;
+  }
+  
+  .tab-button[aria-selected="true"] {
+    color: #0066cc;
+    font-weight: 600;
+  }
+  
+  .tab-button[aria-selected="true"]::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #0066cc;
+  }
+  
+  .tabbed-content-panels {
+    padding: 2rem 0;
+  }
+  
+  .tab-content {
+    display: none;
+  }
+  
+  .tab-content[aria-hidden="false"] {
+    display: block;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .tabbed-content-nav {
+      flex-wrap: nowrap;
+    }
+    
+    .tab-button {
+      padding: 0.8rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* The specific styling for the example in the image */
+  .tab-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tab-content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  /* Style for learn more button */
+  .tab-content .button-container {
+    margin-top: 2rem;
+  }
+  
+  .tab-content .button {
+    display: inline-block;
+    background-color: #0066cc;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 2rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+  
+  .tab-content .button:hover {
+    background-color: #0055aa;
+  }
+  
+  /* Add background image support */
+  .tabbed-content-container.with-background {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 2rem;
+  }
+  
+  .tabbed-content-container.with-background .tab-content h2,
+  .tabbed-content-container.with-background .tab-content p {
+    color: white;
+  }
+  
+  /* Dark overlay for better text readability on background images */
+  .tabbed-content-container.with-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+  }
+  
+  .tabbed-content-container.with-background .tabbed-content-nav,
+  .tabbed-content-container.with-background .tabbed-content-panels {
+    position: relative;
+    z-index: 1;
+  }
