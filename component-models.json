@@ -240,8 +240,7 @@
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
+        "name": "description",
         "label": "Description",
         "valueType": "string"
       },
@@ -249,8 +248,7 @@
         "component": "text",
         "valueType": "string",
         "name": "buttonText",
-        "label": "Button Text",
-        "value": "Learn more"
+        "label": "Button Text"
       },
       {
         "component": "aem-content",
