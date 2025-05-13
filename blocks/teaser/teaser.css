@@ -57,6 +57,14 @@
     margin-bottom: 1.5rem;
 }
 
+.content-container a {
+    color: white;
+}
+
+.content-container a:hover {
+    text-decoration: none;
+}
+
 .highlight {
     font-weight: 700;
 }
