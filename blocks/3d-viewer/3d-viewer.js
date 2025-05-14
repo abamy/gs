@@ -59,7 +59,7 @@ export default function decorate(block) {
         target.x += dx * panX[0] + dy * panY[0];
         target.y += dx * panX[1] + dy * panY[1];
         target.z += dx * panX[2] + dy * panY[2];
-        modelViewer.cameraTarget = ${'`${target.x}m ${target.y}m ${target.z}m`' @ context="unsafe"};
+        modelViewer.cameraTarget = `${target.x}m ${target.y}m ${target.z}m`;
       
         // This pauses turntable rotation
         modelViewer.dispatchEvent(new CustomEvent(
