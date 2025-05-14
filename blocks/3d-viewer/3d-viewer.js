@@ -5,7 +5,7 @@ export default function decorate(block) {
   console.info(config.asset)
 
   const content = document.createRange().createContextualFragment(`
-    <model-viewer 
+    <model-viewer style="width: 100%; height: 500px;"
       src="${config.asset}"
       ar shadow-intensity="1" camera-controls touch-action="pan-y">
     </model-viewer>
