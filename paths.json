@@ -6,6 +6,7 @@
     "/content/dassault/pages/:/"
   ],
   "includes": [
-    "/content/dassault/"
+    "/content/dassault/",
+    "/content/dassault/pages/"
   ]
 }
