@@ -18,12 +18,12 @@ indices:
         select: head > meta[property="og:title"]
         value: |
           attribute(el, 'content')
-  nav:
+  navigation:
     include:
       - '/pages/**'
     exclude:
       - '/**.json'
-    target: /nav.json
+    target: /navigation.json
     properties:
       lastModified:
         select: none
