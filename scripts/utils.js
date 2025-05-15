@@ -1,3 +1,5 @@
+const SITE_ROOT = '/content/3ds';
+
 export async function loadNav() {
     try {
         const response = await fetch(`/navigation-index.json?$timestamp=${Date.now()}`);
@@ -16,11 +18,11 @@ export async function loadNav() {
 }
 
 export function getPagePath(path){
-    return isAuthorMode ? `/content/3ds${path}.html` : path;
+    return isAuthorMode ? `${SITE_ROOT}${path}.html` : path;
 };
 
 export function getIconPath(imageName){
-    const basePath = isAuthorMode ? '/content/3ds.resource/icons/' : '/icons/';
+    const basePath = isAuthorMode ? `${SITE_ROOT}.resource/icons/` : '/icons/';
     return basePath + imageName;
 };
 
