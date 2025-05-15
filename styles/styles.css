@@ -88,16 +88,6 @@ header {
   height: var(--nav-height);
 }
 
-header .header,
-footer .footer {
-  visibility: hidden;
-}
-
-header .header[data-block-status="loaded"],
-footer .footer[data-block-status="loaded"] {
-  visibility: visible;
-}
-
 h1,
 h2,
 h3,
@@ -155,14 +145,12 @@ button {
 
 /* links */
 a:any-link {
-  color: var(--link-color);
   text-decoration: none;
   overflow-wrap: break-word;
 }
 
 a:hover {
   color: var(--link-hover-color);
-  text-decoration: underline;
 }
 
 /* buttons */
@@ -193,7 +181,6 @@ a.button:hover,
 a.button:focus,
 button:hover,
 button:focus {
-  background-color: var(--link-hover-color);
   cursor: pointer;
 }
 
