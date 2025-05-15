@@ -1,5 +1,5 @@
 :root {
-  --primary-color: #005FA9; /* Dassault blue */
+  --primary-color: #005FA9;
   --secondary-color: #77B6E8;
   --dark-color: #202A36;
   --light-color: #ffffff;
@@ -160,7 +160,6 @@
   top: 16px;
 }
 
-/* Modal */
 /* Modal - Modern Style */
 .modal-overlay {
   display: none;
@@ -224,6 +223,7 @@
   font-size: 1.25rem;
   color: var(--dark-gray);
   cursor: pointer;
+  transition: var(--transition);
 }
 
 .modal-close:hover {
@@ -233,6 +233,21 @@
 
 .modal-body {
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.modal-body > * {
+  width: 100%;
+}
+
+.modal-body hr {
+  margin: 1rem 0;
+  border: 0;
+  height: 1px;
+  background-color: var(--gray-color);
+  width: 100%;
 }
 
 .modal-footer {
@@ -244,15 +259,16 @@
   background-color: rgba(233, 236, 239, 0.1);
 }
 
-/* Updated form elements to match modern modal */
+/* Form elements */
 .form-group {
   margin-bottom: 1.75rem;
+  width: 100%;
 }
 
 .form-label {
   display: block;
-  margin-bottom: 0.5rem;
-  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
   color: var(--dark-color);
   font-weight: 500;
 }
@@ -265,6 +281,8 @@
   font-size: 1rem;
   transition: var(--transition);
   background-color: var(--light-color);
+  display: block;
+  box-sizing: border-box;
 }
 
 .form-input:focus, .form-select:focus {
