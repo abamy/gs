@@ -268,18 +268,18 @@
         "component": "select",
         "valueType": "string",
         "name": "offerZone",
-        "label": "Button Text",
+        "label": "Zone",
         "options": [
           {
-            "name": "Teaser Zone",
+            "name": "Teaser",
             "value": "teaser-zone"
           },
           {
-            "name": "Carousel Zone",
+            "name": "Carousel",
             "value": "carousel-zone"
           },
           {
-            "name": "Navigation Zone",
+            "name": "Navigation",
             "value": "navigation-zone"
           }
         ]
