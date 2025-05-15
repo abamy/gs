@@ -2,6 +2,7 @@ import { isAuthorMode } from '../../scripts/utils.js';
 
 export default async function decorate(block) {
   let logoImage = isAuthorMode ? '/content/dassault.resource/icons/logo.svg': '/icons/logo.svg';
+  let searchImage = isAuthorMode ? '/content/dassault.resource/icons/search.svg': '/icons/search.svg';
 
   const content = document.createRange().createContextualFragment(`
     <header class="header" role="banner" aria-label="Dassault Systèmes Main Navigation">
