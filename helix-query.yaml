@@ -23,7 +23,7 @@ indices:
       - '/pages/**'
     exclude:
       - '/**.json'
-    target: /navigation.json
+    target: /navigation-index.json
     properties:
       lastModified:
         select: none
