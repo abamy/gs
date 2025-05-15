@@ -18,7 +18,7 @@ export async function loadNav() {
 }
 
 export function getPagePath(path){
-    return isAuthorMode ? `${SITE_ROOT}${path}.html` : path;
+    return isAuthorMode ? `${SITE_ROOT}${path === "/" ? "index" : path}.html` : path;
 };
 
 export function getIconPath(imageName){
