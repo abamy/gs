@@ -27,6 +27,12 @@
     ]
   },
   {
+    "id": "carousel",
+    "components": [
+      "teaser"
+    ]
+  },
+  {
     "id": "columns",
     "components": [
       "column"
