@@ -1,11 +1,6 @@
-import { isAuthorMode } from '../../scripts/utils.js';
+import { getIconPath } from '../../scripts/utils.js';
 
 export default async function decorate(block) {
-  let logoImage = isAuthorMode ? '/content/3ds.resource/icons/logo.svg': '/icons/logo.svg';
-  let searchImage = isAuthorMode ? '/content/3ds.resource/icons/search.svg': '/icons/search.svg';
-  let loggedImage = isAuthorMode ? '/content/3ds.resource/icons/logged.svg': '/icons/logged.svg';
-  let notLoggedImage = isAuthorMode ? '/content/3ds.resource/icons/not-logged.svg': '/icons/not-logged.svg';
-
   const content = document.createRange().createContextualFragment(`
     <div class="header" role="banner" aria-label="Dassault Systèmes Main Navigation">
       <button class="mobile-menu-btn" aria-expanded="false" aria-controls="main-navigation" aria-label="Toggle menu">
@@ -17,32 +12,32 @@ export default async function decorate(block) {
       </button>
       
       <a href="/" class="logo-link" aria-label="Dassault Systèmes Home">
-        <img src="${logoImage}" alt="Dassault Systèmes Logo" class="logo">
+        <img src="${getIconPath('logo.svg')}" alt="Dassault Systèmes Logo" class="logo">
       </a>
       
       <nav id="main-navigation" class="main-nav" role="navigation" aria-label="Main Navigation">
         <div class="nav-item">
-          <a href="./products" class="nav-link" aria-haspopup="true" aria-expanded="false">
+          <a href="./pages/products" class="nav-link" aria-haspopup="true" aria-expanded="false">
             Products
           </a>
         </div>
         <div class="nav-item">
-          <a href="./industries" class="nav-link" aria-haspopup="true" aria-expanded="false">
+          <a href="./pages/industries" class="nav-link" aria-haspopup="true" aria-expanded="false">
             Industries
           </a>
         </div>
         <div class="nav-item">
-          <a href="./learn" class="nav-link" aria-haspopup="true" aria-expanded="false">
+          <a href="./pages/learn" class="nav-link" aria-haspopup="true" aria-expanded="false">
             Learn
           </a>
         </div>
         <div class="nav-item">
-          <a href="./support" class="nav-link" aria-haspopup="true" aria-expanded="false">
+          <a href="./pages/support" class="nav-link" aria-haspopup="true" aria-expanded="false">
             Support
           </a>
         </div>
         <div class="nav-item">
-          <a href="./about" class="nav-link" aria-haspopup="true" aria-expanded="false">
+          <a href="./pages/about" class="nav-link" aria-haspopup="true" aria-expanded="false">
             About
           </a>
         </div>
@@ -50,10 +45,10 @@ export default async function decorate(block) {
       
       <div class="right-nav">
         <button class="search-btn" aria-label="Search">
-          <img src="${searchImage}" alt="Search Icon" class="search-icon">
+          <img src="${getIconPath('search.svg')}" alt="Search Icon" class="search-icon">
         </button>
         <button class="login-btn" id="loginBtn" aria-label="Login">
-          <img src="${notLoggedImage}" alt="User not logged"></img><span>Login</span>
+          <img src="${getIconPath('not-logged.svg')}" alt="User not logged"></img><span>Login</span>
         </button>
       </div>
     </div>
@@ -102,7 +97,7 @@ export default async function decorate(block) {
 
   const username = localStorage.getItem('username');
   if (username) { 
-      loginBtn.innerHTML = `<img src="${loggedImage}" alt="User logged"></img><span>${username}</span>`;
+      loginBtn.innerHTML = `<img src="${getIconPath('logged.svg')}" alt="User logged"></img><span>${username}</span>`;
   }
 
   // Open modal
@@ -111,7 +106,7 @@ export default async function decorate(block) {
         localStorage.removeItem('logged');
         localStorage.removeItem('username');
         localStorage.removeItem('profileType');
-        loginBtn.innerHTML = `<img src="${notLoggedImage}" alt="User not logged"></img><span>Login</span>`;
+        loginBtn.innerHTML = `<img src="${getIconPath('not-logged.svg')}" alt="User not logged"></img><span>Login</span>`;
     } else {
       loginModal.classList.add('active');
     }
@@ -148,7 +143,7 @@ export default async function decorate(block) {
     localStorage.setItem('logged', true);
     localStorage.setItem('username', username);
     localStorage.setItem('profileType', profileType);
-    loginBtn.innerHTML = `<img src="${loggedImage}" alt="User logged"></img><span>${username}</span>`;
+    loginBtn.innerHTML = `<img src="${getIconPath('logged.svg')}" alt="User logged"></img><span>${username}</span>`;
     closeLoginModal();
   });
 }
