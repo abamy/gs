@@ -5,7 +5,7 @@ export default function decorate(block) {
   const picture = createOptimizedPicture(config.image, config.imagedescription);
 
   const blockId = `teaser-${Math.random().toString(36).substr(2, 9)}`;
-  
+
   const content = document.createRange().createContextualFragment(`
     <section class="teaser-section">
         <div id="${blockId}-image" class="teaser-background">
@@ -24,18 +24,25 @@ export default function decorate(block) {
   block.append(content);
 
   if (config.offerzone) {
-    adobe.target.getOffer({
-      "mbox": config.offerzone,
-      "params": {
+    if (typeof adobe !== 'undefined' && adobe.target) {
+      handleOffer();
+    } else {
+      document.addEventListener('at-library-loaded', handleOffer);
+    }
+
+    function handleOffer() {
+      adobe.target.getOffer({
+        "mbox": config.offerzone,
+        "params": {
           "logged": localStorage.getItem('logged'),
           "profileType": localStorage.getItem('profileType')
-      },
-      "success": function(offer) {
+        },
+        "success": function (offer) {
           if (!offer.length) return;
-  
+
           const offerContent = offer[0].content[0].data.offerByPath.item;
           console.log(offerContent);
-          
+
           const titleElement = document.getElementById(`${blockId}-title`);
           titleElement.innerHTML = offerContent.title;
 
@@ -47,11 +54,13 @@ export default function decorate(block) {
           buttonElement.href = offerContent.buttonLink['_path'];
 
           const imageElement = document.getElementById(`${blockId}-image`);
-          console.log(offerContent.image['_path']);
-      },
-      "error": function(status, error) {
+          const picture = createOptimizedPicture(offerContent.image['_path'].substring('/content/dam/3ds'.length), offerContent.imageDescription);
+          imageElement.innerHTML = picture.outerHTML;
+        },
+        "error": function (status, error) {
           console.log('Error', status, error);
-      }
-    });
+        }
+      });
+    }
   }
 }
