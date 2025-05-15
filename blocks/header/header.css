@@ -161,6 +161,7 @@
 }
 
 /* Modal */
+/* Modal - Modern Style */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -168,12 +169,13 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(32, 42, 54, 0.75);
   justify-content: center;
   align-items: center;
   z-index: 1000;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(4px);
 }
 
 .modal-overlay.active {
@@ -183,61 +185,68 @@
 
 .modal {
   background-color: var(--light-color);
-  border-radius: 8px;
+  border-radius: 12px;
   width: 100%;
   max-width: 480px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  transform: translateY(20px);
-  transition: transform 0.3s ease;
+  transform: translateY(30px) scale(0.95);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-overlay.active .modal {
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem;
-  border-bottom: 1px solid var(--gray-color);
+  padding: 1.75rem 2rem;
+  border-bottom: 1px solid rgba(233, 236, 239, 0.5);
 }
 
 .modal-title {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   color: var(--dark-color);
   font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .modal-close {
-  background: none;
+  background: rgba(233, 236, 239, 0.5);
   border: none;
-  font-size: 1.5rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
   color: var(--dark-gray);
   cursor: pointer;
-  transition: var(--transition);
 }
 
 .modal-close:hover {
+  background: var(--gray-color);
   color: var(--dark-color);
 }
 
 .modal-body {
-  padding: 1.5rem;
+  padding: 2rem;
 }
 
 .modal-footer {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
-  padding: 1.5rem;
-  border-top: 1px solid var(--gray-color);
+  padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(233, 236, 239, 0.5);
+  background-color: rgba(233, 236, 239, 0.1);
 }
 
-/* Form elements */
+/* Updated form elements to match modern modal */
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
 }
 
 .form-label {
@@ -250,32 +259,33 @@
 
 .form-input, .form-select {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--gray-color);
-  border-radius: 4px;
+  padding: 0.875rem 1rem;
+  border: 1.5px solid var(--gray-color);
+  border-radius: 8px;
   font-size: 1rem;
   transition: var(--transition);
+  background-color: var(--light-color);
 }
 
 .form-input:focus, .form-select:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(0, 95, 169, 0.2);
+  box-shadow: 0 0 0 3px rgba(0, 95, 169, 0.15);
 }
 
 .btn {
-  padding: 0.75rem 1.5rem;
-  font-size: 0.875rem;
+  padding: 0.875rem 1.5rem;
+  font-size: 0.9375rem;
   font-weight: 500;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   transition: var(--transition);
   border: none;
 }
 
 .btn-cancel {
-  background-color: transparent;
-  color: var(--dark-gray);
+  background-color: rgba(233, 236, 239, 0.5);
+  color: var(--dark-color);
 }
 
 .btn-cancel:hover {
@@ -285,12 +295,13 @@
 .btn-login {
   background-color: var(--primary-color);
   color: var(--light-color);
+  font-weight: 600;
 }
 
 .btn-login:hover {
-  background-color: #0050a0;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 95, 169, 0.2);
+  background-color: #004d8a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 95, 169, 0.25);
 }
 
 /* Responsive styles */
