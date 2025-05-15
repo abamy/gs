@@ -4,8 +4,7 @@ export async function loadNav() {
     if (!response.ok) {
         throw new Error('Failed to fetch query index');
     }
-    const result = await response.json();
-    console.log(result);
+    return await response.json();
 }
 
 export const isAuthorMode = window.location.href.includes('.html');

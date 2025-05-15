@@ -1,7 +1,8 @@
 import { isAuthorMode, loadNav } from '../../scripts/utils.js';
 
 export default async function decorate(block) {
-  loadNav();
+  const navItems = loadNav();
+  console.info(navItems);
   let logoImage = isAuthorMode ? '/content/dassault.resource/icons/logo.svg': '/icons/logo.svg';
 
   const content = document.createRange().createContextualFragment(`
