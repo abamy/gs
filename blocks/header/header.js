@@ -11,7 +11,7 @@ export default async function decorate(block) {
         </div>
       </button>
       
-      <a href="/" class="logo-link" aria-label="Dassault Systèmes Home">
+      <a href="${getPagePath('/')}" class="logo-link" aria-label="Dassault Systèmes Home">
         <img src="${getIconPath('logo.svg')}" alt="Dassault Systèmes Logo" class="logo">
       </a>
       
