@@ -155,16 +155,73 @@
   right: 20px;
 }
 
+/* Enhanced Mobile Styles */
 @media (max-width: 768px) {
+  .carousel-container {
+    height: 400px;
+  }
+  
+  .slide {
+    padding: 0 5%; /* Reduced side padding on mobile */
+    justify-content: flex-start; /* Align content to top on mobile */
+    padding-top: 80px; /* Add top padding to push content down */
+  }
+  
+  .slide-content {
+    max-width: 100%; /* Allow content to use full width */
+  }
+  
   .slide h1 {
-      font-size: 2rem;
+    font-size: 1.8rem; /* Smaller font size */
+    margin-bottom: 0.75rem; /* Reduced margin */
   }
   
   .slide p {
-      font-size: 1rem;
+    font-size: 0.95rem; /* Smaller paragraph text */
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
   }
   
+  .cta-button {
+    padding: 10px 20px; /* Smaller button */
+    font-size: 0.9rem;
+  }
+  
+  /* Improve navigation positioning */
+  .navigation {
+    bottom: 15px; /* Move nav dots closer to bottom */
+  }
+  
+  .arrow {
+    width: 40px; /* Smaller arrows */
+    height: 40px;
+  }
+  
+  .arrow-left {
+    left: 10px;
+  }
+  
+  .arrow-right {
+    right: 10px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
   .carousel-container {
-      height: 400px;
+    height: 350px;
+  }
+  
+  .slide {
+    padding-top: 60px;
+  }
+  
+  .slide h1 {
+    font-size: 1.5rem;
+  }
+  
+  .slide p {
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
   }
 }
