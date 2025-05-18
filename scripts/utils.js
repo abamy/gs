@@ -21,9 +21,16 @@ export function getPagePath(path){
     return isAuthorMode ? `${SITE_ROOT}${path === "/" ? "/index" : path}.html` : path;
 };
 
-export function getIconPath(imageName){
-    const basePath = isAuthorMode ? `${SITE_ROOT}.resource/icons/` : '/icons/';
-    return basePath + imageName;
-};
+export function getIconPath(imageName) {
+  return `${isAuthorMode ? `${SITE_ROOT}.resource/icons/` : '/icons/'}${imageName}`;
+}
+
+export function getDeliveryUrl(url, smartCrop) {
+  const processedUrl = url
+    .replace(/original\//g, '')
+    .replace(/jpeg|jpg|png/g, 'webp');
+  
+  return `${processedUrl}?format=webply&optimize=high&smartcrop=${smartCrop}&timestamp=${Date.now()}`;
+}
 
 export const isAuthorMode = window.location.href.includes('.html');

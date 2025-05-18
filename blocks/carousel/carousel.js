@@ -1,4 +1,5 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { getDeliveryUrl } from '../../scripts/utils.js';
 
 export default function decorate(block) {
   const slideElements = [];
@@ -6,7 +7,7 @@ export default function decorate(block) {
   for (let i = 0; i < block.children.length; i++) {
     const row = block.children[i];
     const pElements = row.getElementsByTagName('p');
-    const image = `${pElements[0].textContent.replace(/original\//g, '').replace(/jpeg|jpg|png/g, 'webp')}?format=webply&optimize=high&smartcrop=1795x500&timestamp=${Date.now()}`;
+    const image = getDeliveryUrl(pElements[0].textContent, '1795x500');
     const title = pElements[1].textContent;
     const description = pElements[2].textContent;
     const buttonText = pElements[3].textContent;

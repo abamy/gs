@@ -2,7 +2,7 @@ import { getPagePath, getIconPath } from '../../scripts/utils.js';
 
 export default async function decorate(block) {
   const content = document.createRange().createContextualFragment(`
-    <div class="header" role="banner" aria-label="Dassault Systèmes Main Navigation">
+    <div class="header" role="banner" aria-label="Main Navigation">
       <button class="mobile-menu-btn" aria-expanded="false" aria-controls="main-navigation" aria-label="Toggle menu">
         <div class="mobile-menu-icon">
           <span></span>
@@ -11,8 +11,8 @@ export default async function decorate(block) {
         </div>
       </button>
       
-      <a href="${getPagePath('/')}" class="logo-link" aria-label="Dassault Systèmes Home">
-        <img src="${getIconPath('logo.svg')}" alt="Dassault Systèmes Logo" class="logo">
+      <a href="${getPagePath('/')}" class="logo-link" aria-label="Home">
+        <img src="${getIconPath('logo.svg')}" alt="Logo" class="logo">
       </a>
       
       <nav id="main-navigation" class="main-nav" role="navigation" aria-label="Main Navigation">
