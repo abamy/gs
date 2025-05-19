@@ -41,7 +41,6 @@ export default function decorate(block) {
           if (!offer.length) return;
 
           const offerContent = offer[0].content[0].data.offerByPath.item;
-          console.log(offerContent);
 
           const titleElement = document.getElementById(`${blockId}-title`);
           titleElement.innerHTML = offerContent.title;

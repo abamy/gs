@@ -7,7 +7,7 @@ export default function decorate(block) {
   for (let i = 0; i < block.children.length; i++) {
     const row = block.children[i];
     const pElements = row.getElementsByTagName('p');
-    const image = getDeliveryUrl(pElements[0].textContent, '1795x500');
+    const image = getDeliveryUrl(pElements[0].textContent, '3590x1000');
     const title = pElements[1].textContent;
     const description = pElements[2].textContent;
     const buttonText = pElements[3].textContent;
@@ -15,8 +15,8 @@ export default function decorate(block) {
     var slideElement = document.createElement('div');
     slideElement.className = `slide ${i === 0 ? 'active' : ''}`;
     slideElement.setAttribute('data-aue-prop', 'slide');
-    slideElement.innerHTML = `
-      <img class="slide-image" src="${image}" alt="Carousel Image ${i}"></img>
+    slideElement.innerHTML = `   
+      <img class="slide-image" src="${image}&width=500" alt="Carousel Image ${i}"></img>
       <div class="slide-overlay"></div>
       <div class="slide-content">
           <h1 data-aue-label="Title" data-aue-prop="title" data-aue-type="text">${title}</h1>
