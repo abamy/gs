@@ -16,7 +16,7 @@ export default function decorate(block) {
     slideElement.className = `slide ${i === 0 ? 'active' : ''}`;
     slideElement.setAttribute('data-aue-prop', 'slide');
     slideElement.innerHTML = `   
-      <img class="slide-image" src="${image}&width=500" alt="Carousel Image ${i}"></img>
+      <img class="slide-image" src="${image}&width=1795" alt="Carousel Image ${i}"></img>
       <div class="slide-overlay"></div>
       <div class="slide-content">
           <h1 data-aue-label="Title" data-aue-prop="title" data-aue-type="text">${title}</h1>
