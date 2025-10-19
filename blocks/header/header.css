@@ -103,14 +103,16 @@
   align-items: center;
   gap: 0.5rem;
   background-color: transparent;
-  border: 1px solid var(--primary-color);
+  border: 1.5px solid var(--primary-color);
   color: var(--primary-color);
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 0.5rem 1rem;
   font-weight: 500;
   font-size: medium;
   cursor: pointer;
   transition: var(--transition);
+  height: 35px;
+  box-sizing: border-box;
 }
 
 .login-btn:hover {
@@ -118,9 +120,56 @@
   color: var(--light-color);
 }
 
+.login-btn:hover img {
+  filter: brightness(0) invert(1);
+}
+
 .login-btn img {
   width: 18px;
   height: 18px;
+}
+
+/* Locale Switcher */
+.locale-switcher {
+  position: relative;
+}
+
+.locale-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: transparent;
+  border: 1.5px solid var(--primary-color);
+  color: var(--primary-color);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  font-size: medium;
+  cursor: pointer;
+  transition: var(--transition);
+  outline: none;
+  height: 35px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.locale-select:hover {
+  background-color: var(--primary-color);
+  color: var(--light-color);
+}
+
+.locale-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 95, 169, 0.15);
+}
+
+.locale-select option {
+  background-color: var(--light-color);
+  color: var(--dark-color);
+  padding: 0.75rem;
+  font-weight: 500;
 }
 
 /* Mobile menu */
