@@ -1,8 +1,14 @@
-const GRAPHQL_ENDPOINT = 'https://publish-p34570-e1263228.adobeaemcloud.com/graphql/execute.json/3ds/articles-all';
+const GRAPHQL_ENDPOINT = 'https://author-p34570-e1263228.adobeaemcloud.com/graphql/execute.json/3ds/articles-all';
 
 async function fetchArticles() {
   try {
-    const response = await fetch(GRAPHQL_ENDPOINT);
+    const response = await fetch(GRAPHQL_ENDPOINT, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${btoa('aio:aio')}`
+        }
+    });
     if (!response.ok) {
       throw new Error(`Failed to fetch articles: ${response.status}`);
     }
