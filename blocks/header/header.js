@@ -45,7 +45,7 @@ export default async function decorate(block) {
   const headerPath = `/${getCurrentLocale()}/header`;
   const fragment = await loadFragment(headerPath);
 
-  const config = readBlockConfig(fragment);
+  const config = readBlockConfig( fragment.querySelector('.fragment.block') );
   console.log('Loaded header fragment:', config);
 
   const currentLocale = getCurrentLocale();
