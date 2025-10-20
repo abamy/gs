@@ -1,4 +1,5 @@
 import { loadFragment } from '../fragment/fragment.js';
+import { readBlockConfig } from '../../scripts/aem.js';
 import { getPagePath, getIconPath, getCurrentLocale } from '../../scripts/utils.js';
 
 function switchLocale(targetLocale) {
@@ -43,6 +44,9 @@ function buildNavigationHTML(menuItems) {
 export default async function decorate(block) {
   const headerPath = `/${getCurrentLocale()}/header`;
   const fragment = await loadFragment(headerPath);
+
+  const config = readBlockConfig(fragment);
+  console.log('Loaded header fragment:', config);
 
   const currentLocale = getCurrentLocale();
   const menuItems = extractMenuItems(fragment);
