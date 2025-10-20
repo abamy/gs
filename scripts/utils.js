@@ -2,7 +2,7 @@ const SITE_ROOT = '/content/3ds';
 
 export function getCurrentLocale() {
   const path = window.location.pathname;
-  const match = path.match(/^\/(us\/en|fr\/fr)\//);
+  const match = path.match(/(?:^\/content\/3ds\/)?(us\/en|fr\/fr)\//);
   return match ? match[1] : 'us/en';
 }
 
