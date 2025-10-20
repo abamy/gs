@@ -33,7 +33,7 @@ function extractMenuItems(fragment) {
 function buildNavigationHTML(menuItems) {
   return menuItems.map(item => `
     <div class="nav-item">
-      <a href="${getPagePath(item.path)}" class="nav-link" aria-haspopup="true" aria-expanded="false">
+      <a href="${item.path}" class="nav-link" aria-haspopup="true" aria-expanded="false">
         ${item.label}
       </a>
     </div>
