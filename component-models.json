@@ -348,5 +348,9 @@
         "multi": false
       }
     ]
+  },
+  {
+    "id": "articles",
+    "fields": []
   }
 ]
