@@ -3,7 +3,8 @@
     "/content/3ds/:/",
     "/content/3ds/configuration:/.helix/config.json",
     "/content/3ds/metadata:/metadata.json",
-    "/content/3ds/redirects:/redirects.json"
+    "/content/3ds/redirects:/redirects.json",
+    "/content/dam/3ds/images/:/images2/"
   ],
   "includes": [
     "/content/3ds",
