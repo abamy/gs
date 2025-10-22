@@ -1,9 +1,9 @@
 const API_ENDPOINT = 'https://85792-162babybluelobster-stage.adobeioruntime.net/api/v1/web/byom/3ds';
 
-async function fetchArticlesFromAPI(pagePath) {
+async function fetchArticlesFromAPI(lang) {
   try {
     const url = new URL(API_ENDPOINT);
-    url.searchParams.set('path', pagePath);
+    url.searchParams.set('lang', lang);
 
     const response = await fetch(url.toString());
     if (!response.ok) {
