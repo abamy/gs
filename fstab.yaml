@@ -1,5 +1,0 @@
-mountpoints:
-  /:
-    url: "https://author-p34570-e1263228.adobeaemcloud.com/bin/franklin.delivery/fornacif/3ds/main"
-    type: "markup"
-    suffix: ".html"
