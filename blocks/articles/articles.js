@@ -1,8 +1,11 @@
 const API_ENDPOINT = 'https://85792-162babybluelobster-stage.adobeioruntime.net/api/v1/web/byom/3ds';
 
-async function fetchArticlesFromAPI() {
+async function fetchArticlesFromAPI(pagePath) {
   try {
-    const response = await fetch(API_ENDPOINT);
+    const url = new URL(API_ENDPOINT);
+    url.searchParams.set('path', pagePath);
+
+    const response = await fetch(url.toString());
     if (!response.ok) {
       throw new Error(`Failed to fetch articles: ${response.status}`);
     }
@@ -82,7 +85,9 @@ export default async function decorate(block) {
     block.textContent = '';
     block.append(loadingContent);
 
-    articles = await fetchArticlesFromAPI();
+    // Get current page path
+    const currentPath = window.location.pathname;
+    articles = await fetchArticlesFromAPI(currentPath);
   }
 
   // If still no articles found, show empty state
