@@ -1,33 +1,5 @@
 const API_ENDPOINT = 'https://85792-162babybluelobster-stage.adobeioruntime.net/api/v1/web/byom/3ds';
 
-async function fetchArticlesFromAPI(lang) {
-  try {
-    const url = new URL(API_ENDPOINT);
-    url.searchParams.set('lang', lang);
-
-    const response = await fetch(url.toString());
-    if (!response.ok) {
-      throw new Error(`Failed to fetch articles: ${response.status}`);
-    }
-    const html = await response.text();
-
-    // Parse HTML string into DOM
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-
-    // Find the articles block in the parsed HTML
-    const articlesBlock = doc.querySelector('.articles');
-    if (!articlesBlock) {
-      return [];
-    }
-
-    return extractArticlesFromBlock(articlesBlock);
-  } catch (error) {
-    console.error('Error fetching articles from API:', error);
-    return [];
-  }
-}
-
 function extractArticlesFromBlock(block) {
   const articles = [];
   const articleDivs = block.querySelectorAll(':scope > div');
@@ -80,20 +52,6 @@ function extractLang(path) {
 export default async function decorate(block) {
   // Extract articles from the block structure
   let articles = extractArticlesFromBlock(block);
-
-  // If no articles found in block, try fetching from API
-  if (articles.length === 0) {
-    // Show loading state
-    const loadingContent = document.createRange().createContextualFragment(`
-      <div class="articles-loading">Loading articles...</div>
-    `);
-    block.textContent = '';
-    block.append(loadingContent);
-
-    // Get current page path
-    const lang = extractLang(window.location.pathname);
-    articles = await fetchArticlesFromAPI(lang);
-  }
 
   // If still no articles found, show empty state
   if (articles.length === 0) {
