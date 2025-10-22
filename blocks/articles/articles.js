@@ -72,6 +72,11 @@ function buildArticleCard(article) {
   `;
 }
 
+function extractLang(path) {
+  const parts = path.split('/').filter(part => part !== '');
+  return parts.length >= 4 ? parts[3] : null;
+}
+
 export default async function decorate(block) {
   // Extract articles from the block structure
   let articles = extractArticlesFromBlock(block);
@@ -86,8 +91,8 @@ export default async function decorate(block) {
     block.append(loadingContent);
 
     // Get current page path
-    const currentPath = window.location.pathname;
-    articles = await fetchArticlesFromAPI(currentPath);
+    const lang = extractLang(window.location.pathname);
+    articles = await fetchArticlesFromAPI(lang);
   }
 
   // If still no articles found, show empty state
