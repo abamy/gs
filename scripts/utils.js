@@ -4,6 +4,11 @@ function getSiteName() {
   return match ? match[1] : '/';
 }
 
+export function getSiteNameFromDAM(damPath) {
+  const match = damPath.match(/^\/content\/dam\/([^/]+)/);
+  return match[1];
+}
+
 export function getCurrentLocale() {
   const path = window.location.pathname;
   const parts = path.split('/').filter(part => part !== '');

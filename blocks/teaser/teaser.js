@@ -1,4 +1,5 @@
 import { readBlockConfig, createOptimizedPicture } from '../../scripts/aem.js';
+import { getSiteNameFromDAM } from '../../scripts/utils.js';
 
 export default function decorate(block) {
   const config = readBlockConfig(block);
@@ -53,7 +54,9 @@ export default function decorate(block) {
           buttonElement.href = offerContent.buttonLink['_path'];
 
           const imageElement = document.getElementById(`${blockId}-image`);
-          const picture = createOptimizedPicture(offerContent.image['_path'].substring('/content/dam/3ds'.length), offerContent.imageDescription);
+          const imagePath = offerContent.image['_path'];
+          const siteName = getSiteNameFromDAM(imagePath);
+          const picture = createOptimizedPicture(imagePath.substring(`/content/dam/${siteName}`.length), offerContent.imageDescription);
           imageElement.innerHTML = picture.outerHTML;
         },
         "error": function (status, error) {
