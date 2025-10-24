@@ -2,7 +2,7 @@
 export default async function decorate(block) {
   
   block.textContent = '';
-  //block.append(content);
+  block.append("<div>Header Component</div>");
 
   
 }
