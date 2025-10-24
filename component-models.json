@@ -239,8 +239,8 @@
         "name": "default"
       },
       {
-        "component": "reference",
-        "valueType": "custom-media",
+        "component": "custom-media",
+        "valueType": "string",
         "name": "image",
         "label": "Background Image"
       },
