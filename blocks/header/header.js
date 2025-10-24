@@ -58,12 +58,6 @@ function extractLoginModalData(fragment) {
 }
 
 export default async function decorate(block) {
-  // find dom main element and delete it
-  const mainElement = document.querySelector('main');
-  if (mainElement) {
-    mainElement.remove();
-  }
-
   const headerPath = `/${getCurrentLocale()}/header`;
   const fragment = await loadFragment(headerPath);
 
