@@ -246,6 +246,13 @@
         "multi": false
       },
       {
+        "component": "custom-media",
+        "valueType": "string",
+        "name": "image",
+        "label": "Custom Image",
+        "multi": false
+      },
+      {
         "component": "text",
         "valueType": "string",
         "name": "imageDescription", 
