@@ -58,6 +58,7 @@ function extractLoginModalData(fragment) {
 }
 
 export default async function decorate(block) {
+  console.log(block);
   const headerPath = `/${getCurrentLocale()}/header`;
   const fragment = await loadFragment(headerPath);
 
