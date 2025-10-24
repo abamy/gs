@@ -17,7 +17,7 @@ export function getCurrentLocale() {
 }
 
 export function getPagePath(path){
-  return isAuthorMode ? `${SITE_ROOT}${path}2.html` : path;
+  return isAuthorMode ? `${SITE_ROOT}${path}.html` : path;
 };
 
 export function getIconPath(imageName) {
