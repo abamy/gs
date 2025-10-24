@@ -242,7 +242,8 @@
         "component": "custom-media",
         "valueType": "string",
         "name": "image",
-        "label": "Background Image"
+        "label": "Background Image",
+        "multi": false
       },
       {
         "component": "text",
