@@ -49,7 +49,6 @@ function extractLoginModalData(fragment) {
   const optionsText = items[3]?.querySelector('p')?.textContent.trim() || '';
   const cancelButtonLabel = items[4]?.querySelector('p')?.textContent.trim() || 'Cancel';
 
-  // Parse options: "Designer=Designer,Engineer=Engineer,Administrator=Administrator"
   const profileOptions = optionsText.split(',').map(option => {
     const [value, label] = option.split('=');
     return { value: value?.trim(), label: label?.trim() };
@@ -127,7 +126,7 @@ export default async function decorate(block) {
   `);
 
   block.textContent = '';
-  block.append(content);
+  //block.append(content);
 
   const loginBtn = document.getElementById('loginBtn');
   const loginModal = document.getElementById('loginModal');
