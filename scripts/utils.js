@@ -8,8 +8,12 @@ const SITE_ROOT = `/content/${getSiteName()}`;
 
 export function getCurrentLocale() {
   const path = window.location.pathname;
-  const match = path.match(/(?:^\/content\/[^/]+\/)?(us\/en|fr\/fr)\//);
-  return match ? match[1] : 'us/en';
+  const parts = path.split('/').filter(part => part !== '');
+
+  const countryIndex = isAuthorMode ? 2 : 0;
+  const langIndex = isAuthorMode ? 3 : 1;
+
+  return `${parts[countryIndex]}/${parts[langIndex]}`;
 }
 
 export function getPagePath(path){
