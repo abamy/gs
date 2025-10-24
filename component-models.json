@@ -239,7 +239,7 @@
         "name": "default"
       },
       {
-        "component": "reference",
+        "component": "custom-media",
         "valueType": "string",
         "name": "image",
         "label": "Background Image",
