@@ -4,8 +4,6 @@ function getSiteName() {
   return match ? match[1] : '/';
 }
 
-const SITE_ROOT = `/content/${getSiteName()}`;
-
 export function getCurrentLocale() {
   const path = window.location.pathname;
   const parts = path.split('/').filter(part => part !== '');
@@ -17,11 +15,11 @@ export function getCurrentLocale() {
 }
 
 export function getPagePath(path){
-  return isAuthorMode ? `${SITE_ROOT}${path}.html` : path;
+  return isAuthorMode ? `/content/${getSiteName()}${path}.html` : path;
 };
 
 export function getIconPath(imageName) {
-  return `${isAuthorMode ? `${SITE_ROOT}.resource/icons/` : '/icons/'}${imageName}`;
+  return `${isAuthorMode ? `/content/${getSiteName()}.resource/icons/` : '/icons/'}${imageName}`;
 }
 
 export function getDeliveryUrl(url, smartCrop) {
