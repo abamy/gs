@@ -251,6 +251,16 @@
         "name": "customImage"
       },
       {
+        "component": "commerce-picker:picker",
+        "name": "hero-sku",
+        "label": "Product to show on hero",
+        "valueType": "string",
+        "commerce-picker": {
+          "selection-mode": "single",
+          "selection-type": "item"
+        }
+      },
+      {
         "component": "text",
         "valueType": "string",
         "name": "imageDescription", 
