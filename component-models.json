@@ -257,7 +257,7 @@
         "valueType": "string",
         "commerce-picker": {
           "selection-mode": "single",
-          "selection-type": "item"
+          "selection-type": "folder"
         }
       },
       {
