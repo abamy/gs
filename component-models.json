@@ -251,7 +251,7 @@
         "name": "dropboxMedia"
       },
       {
-        "component": "commerce-picker:picker",
+        "component": "commerce-category",
         "name": "commerce-category",
         "label": "Commerce Category",
         "valueType": "string",
