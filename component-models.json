@@ -252,8 +252,8 @@
       },
       {
         "component": "commerce-picker:picker",
-        "name": "hero-sku",
-        "label": "Product to show on hero",
+        "name": "commerce-category",
+        "label": "Commerce Category",
         "valueType": "string",
         "commerce-picker": {
           "selection-mode": "single",
