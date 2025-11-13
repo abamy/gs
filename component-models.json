@@ -247,7 +247,7 @@
       },
       {
         "component": "custom-media",
-        "valueType": "media",
+        "valueType": "string",
         "name": "customImage"
       },
       {
