@@ -60,7 +60,7 @@ export default async function decorate(block) {
 
   if (products.length === 0) {
     const emptyContent = document.createRange().createContextualFragment(`
-      <div class="products-empty">No products found 2.</div>
+      <div class="products-empty">No products found.</div>
     `);
     block.textContent = '';
     block.append(emptyContent);
