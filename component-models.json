@@ -379,7 +379,7 @@
         "name": "commerce-category",
         "label": "Commerce Category",
         "valueType": "string"
-      },
+      }
     ]
   }
 ]
