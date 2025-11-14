@@ -251,12 +251,6 @@
         "name": "dropboxMedia"
       },
       {
-        "component": "commerce-category",
-        "name": "commerce-category",
-        "label": "Commerce Category",
-        "valueType": "string"
-      },
-      {
         "component": "text",
         "valueType": "string",
         "name": "imageDescription", 
@@ -369,6 +363,23 @@
         "name": "title",
         "label": "Title"
       }
+    ]
+  },
+  {
+    "id": "products",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "commerce-category",
+        "name": "commerce-category",
+        "label": "Commerce Category",
+        "valueType": "string"
+      },
     ]
   }
 ]
