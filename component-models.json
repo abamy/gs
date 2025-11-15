@@ -383,6 +383,13 @@
         "valueType": "string",
         "name": "subtitle",
         "label": "Subtitle"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "filters",
+        "label": "Filters",
+        "multi": true
       }
     ]
   }
