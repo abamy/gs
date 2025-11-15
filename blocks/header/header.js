@@ -27,6 +27,10 @@ function extractMenuItems(fragment) {
     });
   }
 
+  menuItems.forEach(item => {
+    item.path = item.path.replace(/\/templates\//, '/pages/');
+  });
+
   return menuItems;
 }
 

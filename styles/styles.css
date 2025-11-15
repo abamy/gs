@@ -102,15 +102,7 @@ h6 {
   scroll-margin: 40px;
 }
 
-h1 {
-  font-size: var(--heading-font-size-l);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  padding-bottom: 0.4em;
-  border-bottom: 2px solid #000000;
-  display: inline-block;
-}
+h1 { font-size: var(--heading-font-size-xxl); }
 h2 { font-size: var(--heading-font-size-xl); }
 h3 { font-size: var(--heading-font-size-l); }
 h4 { font-size: var(--heading-font-size-m); }
