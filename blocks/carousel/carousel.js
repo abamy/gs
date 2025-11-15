@@ -30,12 +30,20 @@ export default function decorate(block) {
 
   const content = document.createRange().createContextualFragment(`
     <div class="carousel-container">
-        <div class="carousel"> 
+        <div class="carousel">
         </div>
-        
-        <div class="arrow arrow-left">&lt;</div>
-        <div class="arrow arrow-right">&gt;</div>
-        
+
+        <div class="arrow arrow-left">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </div>
+        <div class="arrow arrow-right">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </div>
+
         <div class="navigation">
         </div>
     </div>
