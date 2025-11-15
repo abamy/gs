@@ -1,5 +1,5 @@
 import { loadFragment } from '../fragment/fragment.js';
-import { getPagePath, getIconPath, getCurrentLocale } from '../../scripts/utils.js';
+import { isAuthorMode, getPagePath, getIconPath, getCurrentLocale } from '../../scripts/utils.js';
 
 function switchLocale(targetLocale) {
   const currentLocale = getCurrentLocale();
@@ -27,9 +27,12 @@ function extractMenuItems(fragment) {
     });
   }
 
-  menuItems.forEach(item => {
-    item.path = item.path.replace(/\/templates\//, '/pages/');
-  });
+  // apply only on author environment paths
+  if (isAuthorMode) {
+    menuItems.forEach(item => {
+      item.path = item.path.replace(/\/templates\//, '/pages/');
+    });
+  }
 
   return menuItems;
 }
