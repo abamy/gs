@@ -94,7 +94,7 @@ export default async function decorate(block) {
           <select class="locale-select" id="localeSelect" aria-label="Select language">
             <option value="us/en" ${currentLocale === 'us/en' ? 'selected' : ''}>🇺🇸 EN</option>
             <option value="fr/fr" ${currentLocale === 'fr/fr' ? 'selected' : ''}>🇫🇷 FR</option>
-            <option value="es/es" ${currentLocale === 'us/es' ? 'selected' : ''}>🇪🇸 ES</option>
+            <option value="es/es" ${currentLocale === 'es/es' ? 'selected' : ''}>🇪🇸 ES</option>
           </select>
         </div>
         <button class="login-btn" id="loginBtn" aria-label="Login">
