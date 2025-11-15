@@ -19,9 +19,10 @@ export default async function decorate(block) {
     }
   });
 
-  const searchHTML = `
-    <div class="search-container">
-      <h3 class="search-title">${title}</h3>
+  var searchElement = document.createElement('div');
+  searchElement.className = 'search-container';
+  searchElement.innerHTML = `   
+    <h3 class="search-title">${title}</h3>
       <p class="search-subtitle">${description}</p>
 
       <form class="search-form" role="search">
@@ -35,17 +36,9 @@ export default async function decorate(block) {
           />
         </div>
       </form>
-    </div>
   `;
+  moveInstrumentation(block, searchElement); 
 
-  const content = document.createRange().createContextualFragment(moveInstrumentation(searchHTML));
   block.textContent = '';
-  block.append(content);
-
-  const searchForm = block.querySelector('.search-form');
-
-  searchForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    // Placeholder for search implementation
-  });
+  block.append(searchElement);
 }
