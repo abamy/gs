@@ -10,8 +10,8 @@ export default async function decorate(block) {
         <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
         <line x1="12" y1="22.08" x2="12" y2="12"/>
       </svg>`,
-      title: 'Product Lifecycle Management',
-      description: 'Complete PLM solutions to manage your product data, processes, and collaboration from concept to retirement.'
+      title: 'Lorem Ipsum Dolor',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
     },
     {
       icon: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -19,16 +19,16 @@ export default async function decorate(block) {
         <path d="M2 17l10 5 10-5"/>
         <path d="M2 12l10 5 10-5"/>
       </svg>`,
-      title: 'Digital Manufacturing',
-      description: 'Transform your manufacturing processes with digital twin technology and advanced simulation capabilities.'
+      title: 'Consectetur Adipiscing',
+      description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.'
     },
     {
       icon: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="10"/>
         <polyline points="12 6 12 12 16 14"/>
       </svg>`,
-      title: 'Enterprise Training',
-      description: 'Comprehensive training programs and certification courses to maximize your team\'s productivity and expertise.'
+      title: 'Sed Do Eiusmod',
+      description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla.'
     }
   ];
 
