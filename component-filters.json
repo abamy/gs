@@ -1,9 +1,7 @@
 [
   {
     "id": "main",
-    "components": [
-      "section"
-    ]
+    "components": ["section"]
   },
   {
     "id": "section",
@@ -24,40 +22,28 @@
       "products",
       "3d-viewer",
       "search",
-      "services"
+      "services",
+      "video"
     ]
   },
   {
     "id": "cards",
-    "components": [
-      "card"
-    ]
+    "components": ["card"]
   },
   {
     "id": "menu",
-    "components": [
-      "menuItem"
-    ]
+    "components": ["menuItem"]
   },
   {
     "id": "carousel",
-    "components": [
-      "teaser"
-    ]
+    "components": ["teaser"]
   },
   {
     "id": "columns",
-    "components": [
-      "column"
-    ]
+    "components": ["column"]
   },
   {
     "id": "column",
-    "components": [
-      "text",
-      "image",
-      "button",
-      "title"
-    ]
+    "components": ["text", "image", "button", "title"]
   }
 ]
