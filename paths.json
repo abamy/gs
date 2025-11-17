@@ -1,12 +1,9 @@
 {
   "mappings": [
-    "/content/3ds/:/",
-    "/content/3ds/configuration:/.helix/config.json",
-    "/content/3ds/redirects:/redirects.json",
-    "/content/dam/3ds/images/:/images/"
+    "/content/gs/:/",
+    "/content/gs/configuration:/.helix/config.json",
+    "/content/gs/redirects:/redirects.json",
+    "/content/dam/gs/images/:/images/"
   ],
-  "includes": [
-    "/content/3ds",
-    "/content/dam/3ds/images/"
-  ]
+  "includes": ["/content/gs", "/content/dam/gs/images/"]
 }
