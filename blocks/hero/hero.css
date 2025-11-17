@@ -5,15 +5,28 @@
 
 .hero {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  padding: 2.8rem 1.5rem;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
 }
 
 .hero h1 {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  color: var(--background-color);
+  color: white;
+  font-weight: 600;
+  font-size: 2.4rem;
+  line-height: 1.2;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.hero h2,
+.hero h3,
+.hero p {
+  color: white;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .hero picture {
@@ -30,8 +43,33 @@
   height: 100%;
 }
 
+/* Variant: Red title for hero */
+.hero.red-text h1,
+.hero.red-text h2,
+.hero.red-text h3 {
+  color: #c13004;
+}
+
+.hero.red-text p {
+  color: #363636;
+}
+
+/* Light background hero variant */
+.hero.light-bg h1,
+.hero.light-bg h2,
+.hero.light-bg h3,
+.hero.light-bg p {
+  color: #363636;
+  text-shadow: none;
+}
+
 @media (width >= 900px) {
   .hero {
-    padding: 40px 32px;
+    padding: 4.4rem 2rem;
+    min-height: 500px;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
   }
 }

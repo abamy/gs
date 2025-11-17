@@ -19,7 +19,7 @@
 .logo {
     height: 32px;
     padding: 0 2rem;
-    fill: #e30613;
+    fill: #c13004;
 }
 
 .main-nav {
@@ -74,7 +74,7 @@
     background-color: transparent;
     border: 0.5px solid var(--primary-color);
     color: var(--primary-color);
-    border-radius: 10px;
+    border-radius: 20px;
     padding: 0.5rem 1rem;
     font-weight: 500;
     font-size: medium;
@@ -111,7 +111,7 @@
     background-color: transparent;
     border: 0.5px solid var(--primary-color);
     color: var(--primary-color);
-    border-radius: 10px;
+    border-radius: 20px;
     padding: 0.5rem 1rem;
     font-weight: 500;
     font-size: medium;
@@ -233,7 +233,7 @@
 .modal-close {
     background: var(--light-color);
     border: 0.5px solid var(--primary-color);
-    border-radius: 10px;
+    border-radius: 20px;
     width: 32px;
     height: 32px;
     display: flex;
@@ -326,7 +326,7 @@
     background-color: rgba(233, 236, 239, 0.5);
     background: var(--light-color);
     border: 0.5px solid var(--primary-color);
-    border-radius: 10px;
+    border-radius: 20px;
     color: var(--dark-color);
 }
 

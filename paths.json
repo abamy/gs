@@ -5,5 +5,5 @@
     "/content/gs/redirects:/redirects.json",
     "/content/dam/gs/images/:/images/"
   ],
-  "includes": ["/content/gs", "/content/dam/gs/images/"]
+  "includes": ["/content/gs/", "/content/dam/gs/images/"]
 }

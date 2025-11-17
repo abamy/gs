@@ -2,7 +2,7 @@
     position: relative;
     width: 100%;
     min-height: 500px;
-    background-color: #000;
+    background-color: #f1f1f1;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -39,19 +39,30 @@
     position: relative;
     max-width: 800px;
     color: white;
-    padding: 40px;
+    padding: 2.8rem;
 }
 
 .content-container h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
+    font-size: 2.4rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    line-height: 1.2;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.content-container h2,
+.content-container h3 {
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .content-container p {
-    font-size: 1.1rem;
+    font-size: 1rem;
     line-height: 1.6;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
+    color: white;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .content-container a {
@@ -60,35 +71,71 @@
 
 .content-container a:hover {
     text-decoration: none;
+    color: #c13004;
 }
 
 .highlight {
-    font-weight: 700;
+    font-weight: 600;
+    color: white;
 }
 
 .learn-more-btn {
     display: inline-block;
-    background-color: #005FA9;
+    background-color: #c13004;
     color: white;
     font-size: 1rem;
     font-weight: 500;
     text-decoration: none;
-    padding: 12px 24px;
-    border-radius: 30px;
-    margin-top: 1rem;
-    transition: background-color 0.3s ease;
+    padding: 1.2rem 2rem;
+    border-radius: 24px;
+    margin-top: 1.2rem;
+    transition: all 0.3s ease;
 }
 
 .learn-more-btn:hover {
-    background-color: #1557b0;
+    background-color: #a02803;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(193, 48, 4, 0.3);
+}
+
+/* Variant: Red titles (add 'red-text' class to teaser section for this effect) */
+.teaser-section.red-text .content-container h1,
+.teaser-section.red-text .content-container h2,
+.teaser-section.red-text .content-container h3 {
+    color: #c13004;
+}
+
+.teaser-section.red-text .content-container p {
+    color: #363636;
+}
+
+.teaser-section.red-text .content-container .highlight {
+    color: #c13004;
+}
+
+/* Light background variant (add 'light-bg' class for sections without dark images) */
+.teaser-section.light-bg {
+    background-color: white;
+}
+
+.teaser-section.light-bg .content-container h1,
+.teaser-section.light-bg .content-container h2,
+.teaser-section.light-bg .content-container h3,
+.teaser-section.light-bg .content-container p {
+    color: #363636;
+    text-shadow: none;
 }
 
 @media (max-width: 768px) {
-    .content-container h1 {
-        font-size: 2.5rem;
+    .content-container {
+        padding: 2rem;
     }
-    
+
+    .content-container h1 {
+        font-size: 2rem;
+    }
+
     .content-container p {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 }
