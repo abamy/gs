@@ -12,7 +12,9 @@ function extractProductsFromBlock(block) {
 
       // Price can be direct text or wrapped in <p>
       const priceElement = children[3]?.querySelector('p');
-      const price = priceElement ? priceElement.textContent.trim() : children[3]?.textContent.trim() || '';
+      const price = priceElement
+        ? priceElement.textContent.trim()
+        : children[3]?.textContent.trim() || '';
 
       // Picture can be direct <picture> or wrapped in <p>
       let picture = children[4]?.querySelector('picture');
@@ -27,7 +29,7 @@ function extractProductsFromBlock(block) {
         description,
         price,
         picture: picture ? picture.outerHTML : '',
-        index
+        index,
       });
     }
   });
@@ -67,7 +69,9 @@ export default async function decorate(block) {
     return;
   }
 
-  const productsHTML = products.map(product => buildProductCard(product)).join('');
+  const productsHTML = products
+    .map((product) => buildProductCard(product))
+    .join('');
 
   const content = document.createRange().createContextualFragment(`
     <div class="products-grid">

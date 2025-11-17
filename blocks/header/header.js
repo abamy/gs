@@ -1,10 +1,18 @@
 import { loadFragment } from '../fragment/fragment.js';
-import { isAuthorMode, getPagePath, getIconPath, getCurrentLocale } from '../../scripts/utils.js';
+import {
+  isAuthorMode,
+  getPagePath,
+  getIconPath,
+  getCurrentLocale,
+} from '../../scripts/utils.js';
 
 function switchLocale(targetLocale) {
   const currentLocale = getCurrentLocale();
   const currentPath = window.location.pathname;
-  const newPath = currentPath.replace(`/${currentLocale}/`, `/${targetLocale}/`);
+  const newPath = currentPath.replace(
+    `/${currentLocale}/`,
+    `/${targetLocale}/`,
+  );
   window.location.href = newPath;
 }
 
@@ -14,21 +22,21 @@ function extractMenuItems(fragment) {
 
   if (menuBlock) {
     const items = menuBlock.querySelectorAll(':scope > div');
-    items.forEach(item => {
+    items.forEach((item) => {
       const labelEl = item.querySelector('div:first-child p');
       const linkEl = item.querySelector('div:nth-child(2) a');
 
       if (labelEl && linkEl) {
         menuItems.push({
           label: labelEl.textContent.trim(),
-          path: linkEl.getAttribute('href')
+          path: linkEl.getAttribute('href'),
         });
       }
     });
   }
 
   if (!isAuthorMode) {
-    menuItems.forEach(item => {
+    menuItems.forEach((item) => {
       item.path = item.path.replace(/\/templates\//, '/pages/');
     });
   }
@@ -37,30 +45,46 @@ function extractMenuItems(fragment) {
 }
 
 function buildNavigationHTML(menuItems) {
-  return menuItems.map(item => `
+  return menuItems
+    .map(
+      (item) => `
     <div class="nav-item">
       <a href="${item.path}" class="nav-link" aria-haspopup="true" aria-expanded="false">
         ${item.label}
       </a>
     </div>
-  `).join('');
+  `,
+    )
+    .join('');
 }
 
 function extractLoginModalData(fragment) {
   const loginModalBlock = fragment.querySelector('.login-modal.block');
   const items = loginModalBlock.querySelectorAll(':scope > div');
   const title = items[0]?.querySelector('p')?.textContent.trim() || 'Login';
-  const usernameLabel = items[1]?.querySelector('p')?.textContent.trim() || 'Username';
-  const profileTypeLabel = items[2]?.querySelector('p')?.textContent.trim() || 'Profile Type';
+  const usernameLabel =
+    items[1]?.querySelector('p')?.textContent.trim() || 'Username';
+  const profileTypeLabel =
+    items[2]?.querySelector('p')?.textContent.trim() || 'Profile Type';
   const optionsText = items[3]?.querySelector('p')?.textContent.trim() || '';
-  const cancelButtonLabel = items[4]?.querySelector('p')?.textContent.trim() || 'Cancel';
+  const cancelButtonLabel =
+    items[4]?.querySelector('p')?.textContent.trim() || 'Cancel';
 
-  const profileOptions = optionsText.split(',').map(option => {
-    const [value, label] = option.split('=');
-    return { value: value?.trim(), label: label?.trim() };
-  }).filter(opt => opt.value && opt.label);
+  const profileOptions = optionsText
+    .split(',')
+    .map((option) => {
+      const [value, label] = option.split('=');
+      return { value: value?.trim(), label: label?.trim() };
+    })
+    .filter((opt) => opt.value && opt.label);
 
-  return { title, usernameLabel, profileTypeLabel, profileOptions, cancelButtonLabel };
+  return {
+    title,
+    usernameLabel,
+    profileTypeLabel,
+    profileOptions,
+    cancelButtonLabel,
+  };
 }
 
 export default async function decorate(block) {
@@ -80,15 +104,15 @@ export default async function decorate(block) {
           <span></span>
         </div>
       </button>
-      
+
       <a href="${getPagePath(`/${currentLocale}/home`)}" class="logo-link" aria-label="Home">
         <img src="${getIconPath('logo.svg')}" alt="Logo" class="logo">
       </a>
-      
+
       <nav id="main-navigation" class="main-nav" role="navigation" aria-label="Main Navigation">
         ${navigationHTML}
       </nav>
-      
+
       <div class="right-nav">
         <div class="locale-switcher">
           <select class="locale-select" id="localeSelect" aria-label="Select language">
@@ -118,7 +142,7 @@ export default async function decorate(block) {
           <div class="form-group">
             <label for="profileType" class="form-label">${loginModalData.profileTypeLabel}</label>
             <select id="profileType" class="form-select" required>
-              ${loginModalData.profileOptions.map(opt => `<option value="${opt.value}">${opt.label}</option>`).join('')}
+              ${loginModalData.profileOptions.map((opt) => `<option value="${opt.value}">${opt.label}</option>`).join('')}
             </select>
           </div>
         </form>
@@ -144,46 +168,46 @@ export default async function decorate(block) {
   const localeSelect = document.getElementById('localeSelect');
 
   const username = localStorage.getItem('username');
-  if (username) { 
-      loginBtn.innerHTML = `<img src="${getIconPath('logged.svg')}" alt="User logged"></img><span>${username}</span>`;
+  if (username) {
+    loginBtn.innerHTML = `<img src="${getIconPath('logged.svg')}" alt="User logged"></img><span>${username}</span>`;
   }
 
   // Open modal
-  loginBtn.addEventListener('click', function() {
+  loginBtn.addEventListener('click', () => {
     if (localStorage.getItem('logged')) {
-        localStorage.removeItem('logged');
-        localStorage.removeItem('username');
-        localStorage.removeItem('profileType');
-        loginBtn.innerHTML = `<img src="${getIconPath('not-logged.svg')}" alt="User not logged"></img>`;
+      localStorage.removeItem('logged');
+      localStorage.removeItem('username');
+      localStorage.removeItem('profileType');
+      loginBtn.innerHTML = `<img src="${getIconPath('not-logged.svg')}" alt="User not logged"></img>`;
     } else {
       loginModal.classList.add('active');
     }
   });
-  
+
   // Close modal methods
   function closeLoginModal() {
     loginModal.classList.remove('active');
   }
-  
+
   closeModal.addEventListener('click', closeLoginModal);
   cancelBtn.addEventListener('click', closeLoginModal);
-  
+
   // Close modal when clicking outside
-  loginModal.addEventListener('click', function(e) {
+  loginModal.addEventListener('click', (e) => {
     if (e.target === loginModal) {
       closeLoginModal();
     }
   });
-  
+
   // Mobile menu toggle
-  mobileMenuBtn.addEventListener('click', function() {
+  mobileMenuBtn.addEventListener('click', () => {
     mainNav.classList.toggle('active');
     const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
     mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
   });
-  
+
   // Form submission
-  document.getElementById('loginForm').addEventListener('submit', function(e) {
+  document.getElementById('loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const username = document.getElementById('username').value;
     const profileType = document.getElementById('profileType').value;
@@ -196,7 +220,7 @@ export default async function decorate(block) {
   });
 
   // Locale switcher
-  localeSelect.addEventListener('change', function() {
+  localeSelect.addEventListener('change', function () {
     const targetLocale = this.value;
     if (targetLocale !== currentLocale) {
       switchLocale(targetLocale);

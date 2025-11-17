@@ -3,14 +3,22 @@ import { readBlockConfig } from '../../scripts/aem.js';
 export default async function decorate(block) {
   const config = readBlockConfig(block);
 
-
   const title = config.title || 'Search';
-  const subtitle = config.subtitle || 'Enter keywords to find what you\'re looking for';
+  const subtitle =
+    config.subtitle || "Enter keywords to find what you're looking for";
 
-  const filters = config.filters ? config.filters.split(',').map(f => f.trim()).filter(f => f) : [];
-  const filterButtons = filters.map((filter, index) =>
-    `<button type="button" class="search-filter-btn ${index === 0 ? 'active' : ''}">${filter}</button>`
-  ).join('');
+  const filters = config.filters
+    ? config.filters
+        .split(',')
+        .map((f) => f.trim())
+        .filter((f) => f)
+    : [];
+  const filterButtons = filters
+    .map(
+      (filter, index) =>
+        `<button type="button" class="search-filter-btn ${index === 0 ? 'active' : ''}">${filter}</button>`,
+    )
+    .join('');
 
   const searchHTML = `
     <div class="search-container">
@@ -46,9 +54,9 @@ export default async function decorate(block) {
 
   // Handle filter selection only if filters exist
   if (filterBtns.length > 0) {
-    filterBtns.forEach(btn => {
+    filterBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
+        filterBtns.forEach((b) => b.classList.remove('active'));
         btn.classList.add('active');
         // Placeholder for filter logic
         console.log('Selected filter:', btn.textContent);

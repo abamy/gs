@@ -3,7 +3,7 @@
   margin: 0;
   width: 100%;
   background: var(--light-color);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--divider);
 }
 
 .search-container {
@@ -23,7 +23,7 @@
 
 .search-subtitle {
   font-size: 1.125rem;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--text-secondary);
   margin: 0 0 0.75rem 0;
   font-weight: 400;
   text-align: center;
@@ -38,7 +38,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  background-color: #ffffff;
+  background-color: var(--white);
   border: none;
   border-radius: 8px;
   overflow: hidden;
@@ -98,7 +98,7 @@
 }
 
 .search-filter-btn:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: var(--bg-hover);
   border-color: var(--dark-gray);
   transform: translateY(-2px);
 }
@@ -106,7 +106,7 @@
 .search-filter-btn.active {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
-  color: #ffffff;
+  color: var(--white);
 }
 
 .search-filter-btn.active:hover {

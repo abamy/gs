@@ -11,7 +11,7 @@ export function getSiteNameFromDAM(damPath) {
 
 export function getCurrentLocale() {
   const path = window.location.pathname;
-  const parts = path.split('/').filter(part => part !== '');
+  const parts = path.split('/').filter((part) => part !== '');
 
   const countryIndex = isAuthorMode ? 2 : 0;
   const langIndex = isAuthorMode ? 3 : 1;
@@ -19,9 +19,9 @@ export function getCurrentLocale() {
   return `${parts[countryIndex]}/${parts[langIndex]}`;
 }
 
-export function getPagePath(path){
+export function getPagePath(path) {
   return isAuthorMode ? `/content/${getSiteName()}${path}.html` : path;
-};
+}
 
 export function getIconPath(imageName) {
   return `${isAuthorMode ? `/content/${getSiteName()}.resource/icons/` : '/icons/'}${imageName}`;
@@ -31,7 +31,7 @@ export function getDeliveryUrl(url, smartCrop) {
   const processedUrl = url
     .replace(/original\//g, '')
     .replace(/jpeg|jpg|png/g, 'webp');
-  
+
   return `${processedUrl}?format=webply&optimize=high&smartcrop=${smartCrop}&timestamp=${Date.now()}`;
 }
 

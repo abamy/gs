@@ -15,18 +15,18 @@
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  color: white;
+  color: var(--white);
   font-weight: 600;
   font-size: 2.4rem;
   line-height: 1.2;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 2px 8px var(--overlay-medium);
 }
 
 .hero h2,
 .hero h3,
 .hero p {
-  color: white;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  color: var(--white);
+  text-shadow: 0 1px 4px var(--overlay-medium);
 }
 
 .hero picture {
@@ -47,11 +47,11 @@
 .hero.red-text h1,
 .hero.red-text h2,
 .hero.red-text h3 {
-  color: #c13004;
+  color: var(--primary-color-dark);
 }
 
 .hero.red-text p {
-  color: #363636;
+  color: var(--dark-color);
 }
 
 /* Light background hero variant */
@@ -59,7 +59,7 @@
 .hero.light-bg h2,
 .hero.light-bg h3,
 .hero.light-bg p {
-  color: #363636;
+  color: var(--dark-color);
   text-shadow: none;
 }
 

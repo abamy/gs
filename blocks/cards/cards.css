@@ -10,14 +10,14 @@
 .cards > ul > li {
   border: none;
   background-color: var(--background-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px var(--divider);
   border-radius: 4px;
   overflow: hidden;
   transition: var(--transition);
 }
 
 .cards > ul > li:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 16px var(--overlay-light);
   transform: translateY(-2px);
 }
 

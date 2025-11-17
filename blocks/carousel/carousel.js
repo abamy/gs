@@ -4,7 +4,7 @@ import { getDeliveryUrl } from '../../scripts/utils.js';
 export default function decorate(block) {
   const slideElements = [];
 
-  for (let i = 0; i < block.children.length; i++) {
+  for (let i = 0; i < block.children.length; i += 1) {
     const row = block.children[i];
     const pElements = row.getElementsByTagName('p');
     const image = getDeliveryUrl(pElements[0].textContent, '3590x1000');
@@ -12,10 +12,10 @@ export default function decorate(block) {
     const description = pElements[2].textContent;
     const buttonText = pElements[3].textContent;
 
-    var slideElement = document.createElement('div');
+    const slideElement = document.createElement('div');
     slideElement.className = `slide ${i === 0 ? 'active' : ''}`;
     slideElement.setAttribute('data-aue-prop', 'slide');
-    slideElement.innerHTML = `   
+    slideElement.innerHTML = `
       <img class="slide-image" src="${image}&width=1795" alt="Carousel Image ${i}"></img>
       <div class="slide-overlay"></div>
       <div class="slide-content">
@@ -24,8 +24,8 @@ export default function decorate(block) {
           <button data-aue-label="Call to Action" data-aue-prop="buttonText" data-aue-type="text" class="cta-button">${buttonText}</button>
       </div>
     `;
-    moveInstrumentation(row, slideElement); 
-    slideElements.push(slideElement)
+    moveInstrumentation(row, slideElement);
+    slideElements.push(slideElement);
   }
 
   const content = document.createRange().createContextualFragment(`
@@ -57,7 +57,7 @@ export default function decorate(block) {
   }
 
   const carousel = content.querySelector('.carousel');
-  slideElements.forEach(slideElement => carousel.append(slideElement));
+  slideElements.forEach((slideElement) => carousel.append(slideElement));
 
   block.textContent = '';
   block.append(content);
@@ -66,62 +66,62 @@ export default function decorate(block) {
   const dots = document.querySelectorAll('.nav-dot');
   const leftArrow = document.querySelector('.arrow-left');
   const rightArrow = document.querySelector('.arrow-right');
-  
+
   let currentSlide = 0;
   let slideInterval;
-  
+
   function showSlide(index) {
-      // Remove active class from all slides and dots
-      slides.forEach(slide => slide.classList.remove('active'));
-      dots.forEach(dot => dot.classList.remove('active'));
-      
-      // Add active class to current slide and dot
-      slides[index].classList.add('active');
-      dots[index].classList.add('active');
-      
-      currentSlide = index;
+    // Remove active class from all slides and dots
+    slides.forEach((slide) => slide.classList.remove('active'));
+    dots.forEach((dot) => dot.classList.remove('active'));
+
+    // Add active class to current slide and dot
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+
+    currentSlide = index;
   }
-  
+
   function nextSlide() {
-      let next = currentSlide + 1;
-      if (next >= slides.length) next = 0;
-      showSlide(next);
+    let next = currentSlide + 1;
+    if (next >= slides.length) next = 0;
+    showSlide(next);
   }
-  
+
   function prevSlide() {
-      let prev = currentSlide - 1;
-      if (prev < 0) prev = slides.length - 1;
-      showSlide(prev);
+    let prev = currentSlide - 1;
+    if (prev < 0) prev = slides.length - 1;
+    showSlide(prev);
   }
-  
+
   // Setup event listeners
-  rightArrow.addEventListener('click', function() {
-      nextSlide();
-      resetInterval();
+  rightArrow.addEventListener('click', () => {
+    nextSlide();
+    resetInterval();
   });
-  
-  leftArrow.addEventListener('click', function() {
-      prevSlide();
-      resetInterval();
+
+  leftArrow.addEventListener('click', () => {
+    prevSlide();
+    resetInterval();
   });
-  
+
   dots.forEach((dot, index) => {
-      dot.addEventListener('click', function() {
-          showSlide(index);
-          resetInterval();
-      });
+    dot.addEventListener('click', () => {
+      showSlide(index);
+      resetInterval();
+    });
   });
-  
+
   // Auto-advance slides
   function startInterval() {
-      slideInterval = setInterval(nextSlide, 5000);
+    slideInterval = setInterval(nextSlide, 5000);
   }
-  
+
   function resetInterval() {
-      clearInterval(slideInterval);
-      startInterval();
+    clearInterval(slideInterval);
+    startInterval();
   }
-  
+
   // Initialize the automatic slideshow
   startInterval();
 }

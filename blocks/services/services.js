@@ -11,7 +11,8 @@ export default async function decorate(block) {
         <line x1="12" y1="22.08" x2="12" y2="12"/>
       </svg>`,
       title: 'Lorem Ipsum Dolor',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.'
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
     },
     {
       icon: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -20,7 +21,8 @@ export default async function decorate(block) {
         <path d="M2 12l10 5 10-5"/>
       </svg>`,
       title: 'Consectetur Adipiscing',
-      description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.'
+      description:
+        'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.',
     },
     {
       icon: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -28,17 +30,22 @@ export default async function decorate(block) {
         <polyline points="12 6 12 12 16 14"/>
       </svg>`,
       title: 'Sed Do Eiusmod',
-      description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla.'
-    }
+      description:
+        'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla.',
+    },
   ];
 
-  const servicesHTML = services.map(service => `
+  const servicesHTML = services
+    .map(
+      (service) => `
     <div class="service-item">
       <div class="service-icon">${service.icon}</div>
       <h3 class="service-title">${service.title}</h3>
       <p class="service-description">${service.description}</p>
     </div>
-  `).join('');
+  `,
+    )
+    .join('');
 
   const content = document.createRange().createContextualFragment(`
     <div class="services-container">

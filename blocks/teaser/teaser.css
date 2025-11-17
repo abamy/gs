@@ -2,7 +2,7 @@
     position: relative;
     width: 100%;
     min-height: 500px;
-    background-color: #f1f1f1;
+    background-color: var(--light-color);
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -30,15 +30,28 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 20% 50%, rgba(255, 100, 100, 0.2) 0%, transparent 25%),
-                radial-gradient(circle at 80% 30%, rgba(100, 200, 255, 0.2) 0%, transparent 25%),
-                radial-gradient(circle at 50% 80%, rgba(255, 220, 100, 0.2) 0%, transparent 25%);
+    background:
+        radial-gradient(
+            circle at 20% 50%,
+            rgba(255, 100, 100, 0.2) 0%,
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 80% 30%,
+            rgba(100, 200, 255, 0.2) 0%,
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 50% 80%,
+            rgba(255, 220, 100, 0.2) 0%,
+            transparent 25%
+        );
 }
 
 .content-container {
     position: relative;
     max-width: 800px;
-    color: white;
+    color: var(--white);
     padding: 2.8rem;
 }
 
@@ -47,42 +60,42 @@
     font-weight: 600;
     margin-bottom: 1.2rem;
     line-height: 1.2;
-    color: white;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    color: var(--white);
+    text-shadow: 0 2px 8px var(--overlay-medium);
 }
 
 .content-container h2,
 .content-container h3 {
-    color: white;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    color: var(--white);
+    text-shadow: 0 2px 8px var(--overlay-medium);
 }
 
 .content-container p {
     font-size: 1rem;
     line-height: 1.6;
     margin-bottom: 1.2rem;
-    color: white;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    color: var(--white);
+    text-shadow: 0 1px 4px var(--overlay-medium);
 }
 
 .content-container a {
-    color: white;
+    color: var(--white);
 }
 
 .content-container a:hover {
     text-decoration: none;
-    color: #c13004;
+    color: var(--primary-color);
 }
 
 .highlight {
     font-weight: 600;
-    color: white;
+    color: var(--white);
 }
 
 .learn-more-btn {
     display: inline-block;
-    background-color: #c13004;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--white);
     font-size: 1rem;
     font-weight: 500;
     text-decoration: none;
@@ -93,7 +106,7 @@
 }
 
 .learn-more-btn:hover {
-    background-color: #a02803;
+    background-color: var(--primary-color);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(193, 48, 4, 0.3);
 }
@@ -102,27 +115,27 @@
 .teaser-section.red-text .content-container h1,
 .teaser-section.red-text .content-container h2,
 .teaser-section.red-text .content-container h3 {
-    color: #c13004;
+    color: var(--primary-color-dark);
 }
 
 .teaser-section.red-text .content-container p {
-    color: #363636;
+    color: var(--dark-color);
 }
 
 .teaser-section.red-text .content-container .highlight {
-    color: #c13004;
+    color: var(--primary-color-dark);
 }
 
 /* Light background variant (add 'light-bg' class for sections without dark images) */
 .teaser-section.light-bg {
-    background-color: white;
+    background-color: var(--white);
 }
 
 .teaser-section.light-bg .content-container h1,
 .teaser-section.light-bg .content-container h2,
 .teaser-section.light-bg .content-container h3,
 .teaser-section.light-bg .content-container p {
-    color: #363636;
+    color: var(--dark-color);
     text-shadow: none;
 }
 

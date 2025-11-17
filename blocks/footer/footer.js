@@ -9,7 +9,9 @@ import { getCurrentLocale } from '../../scripts/utils.js';
 export default async function decorate(block) {
   const currentLocale = getCurrentLocale();
   const footerMeta = getMetadata('footer');
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : `/${currentLocale}/footer`;
+  const footerPath = footerMeta
+    ? new URL(footerMeta, window.location).pathname
+    : `/${currentLocale}/footer`;
   const fragment = await loadFragment(footerPath);
 
   const copyright = fragment.querySelector('p').innerHTML;

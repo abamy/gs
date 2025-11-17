@@ -33,12 +33,12 @@ export default function decorate(block) {
 
     function handleOffer() {
       adobe.target.getOffer({
-        "mbox": config.offerzone,
-        "params": {
-          "logged": localStorage.getItem('logged'),
-          "profileType": localStorage.getItem('profileType')
+        mbox: config.offerzone,
+        params: {
+          logged: localStorage.getItem('logged'),
+          profileType: localStorage.getItem('profileType'),
         },
-        "success": function (offer) {
+        success(offer) {
           if (!offer.length) return;
 
           const offerContent = offer[0].content[0].data.offerByPath.item;
@@ -46,22 +46,27 @@ export default function decorate(block) {
           const titleElement = document.getElementById(`${blockId}-title`);
           titleElement.innerHTML = offerContent.title;
 
-          const descriptionElement = document.getElementById(`${blockId}-description`);
+          const descriptionElement = document.getElementById(
+            `${blockId}-description`,
+          );
           descriptionElement.innerHTML = offerContent.description.html;
 
           const buttonElement = document.getElementById(`${blockId}-button`);
           buttonElement.innerHTML = offerContent.buttonText;
-          buttonElement.href = offerContent.buttonLink['_path'];
+          buttonElement.href = offerContent.buttonLink._path;
 
           const imageElement = document.getElementById(`${blockId}-image`);
-          const imagePath = offerContent.image['_path'];
+          const imagePath = offerContent.image._path;
           const siteName = getSiteNameFromDAM(imagePath);
-          const picture = createOptimizedPicture(imagePath.substring(`/content/dam/${siteName}`.length), offerContent.imageDescription);
+          const picture = createOptimizedPicture(
+            imagePath.substring(`/content/dam/${siteName}`.length),
+            offerContent.imageDescription,
+          );
           imageElement.innerHTML = picture.outerHTML;
         },
-        "error": function (status, error) {
+        error(status, error) {
           console.log('Error', status, error);
-        }
+        },
       });
     }
   }
