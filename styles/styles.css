@@ -172,7 +172,7 @@ h6 {
     line-height: 1.2;
     padding: 0;
     margin-bottom: 1em;
-    color: var(--dark-color);
+    color: var(--color-primary-base);
     letter-spacing: 0;
     text-transform: none;
 }
