@@ -12,9 +12,14 @@
 
 :root {
     /* colors - Moulinex inspired palette */
-    --primary-color: #e30613;
-    --primary-color-dark: #c13004;
-    --primary-color-darker: #0d3d7a;
+    --primary-color: hsl(356.4705882353deg, 94.8497854077%, 45.6862745098%);
+    --color-primary-base: hsl(
+        356.4705882353deg,
+        94.8497854077%,
+        45.6862745098%
+    );
+    --primary-color-dark: hsl(2.2058823529deg, 63.5514018692%, 41.9607843137%);
+    --primary-color-darker: hsl(5.4545454545deg, 53.1034482759%, 28.431372549%);
     --secondary-color: #f1f1f1;
     --dark-color: #363636;
     --light-color: #f1f1f1;
@@ -27,15 +32,15 @@
     --link-hover-color: #e30613;
 
     /* semantic colors */
-    --info-color: #1758AB;
+    --info-color: #1758ab;
     --info-color-dark: #004d8a;
-    --info-color-light: #77B6E8;
+    --info-color-light: #77b6e8;
 
     /* neutral colors */
     --white: #ffffff;
     --black: #000000;
     --border-color: #e9ecef;
-    --muted-text: #6C757D;
+    --muted-text: #6c757d;
     --body-text: #212529;
 
     /* opacity variants */
@@ -57,7 +62,8 @@
 
     /* fonts - Avenir */
     --body-font-family: 'Avenir', avenir-fallback, sans-serif;
-    --heading-font-family: 'Avenir', avenir-fallback, sans-serif;
+    --heading-font-family:
+        'Urbanist', 'Urbanist-Fallback', 'Arial Black', sans-serif;
 
     /* body sizes */
     --body-font-size-m: 16px;
@@ -135,10 +141,10 @@ h6 {
     margin-top: 0.8em;
     margin-bottom: 0.25em;
     font-family: var(--heading-font-family);
-    font-weight: 500;
+    font-weight: 700;
     line-height: 1.2;
     scroll-margin: 40px;
-    color: var(--dark-color);
+    color: var(--primary-color);
 }
 
 h1 {
@@ -219,8 +225,8 @@ button {
     max-width: 100%;
     margin: 12px 0;
     border: 2px solid transparent;
-    border-radius: 24px;
-    padding: 1.2rem 2rem;
+    border-radius: 22px;
+    padding: 12px 20px;
     font-family: var(--body-font-family);
     font-style: normal;
     font-weight: 500;
@@ -234,6 +240,7 @@ button {
     text-overflow: ellipsis;
     white-space: nowrap;
     transition: var(--transition);
+    align-items: center;
 }
 
 a.button:hover,
