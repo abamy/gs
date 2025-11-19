@@ -1,57 +1,118 @@
 /*
- * Fragment Block
- * Include content on a page as a fragment.
- * https://www.aem.live/developer/block-collection/fragment
+ * Content Fragment Block
+ * Fetches and displays content fragments from AEM via GraphQL
  */
-
-import { decorateMain } from '../../scripts/scripts.js';
-
-import { loadSections } from '../../scripts/aem.js';
 
 /**
- * Loads a fragment.
- * @param {string} path The path to the fragment
- * @returns {HTMLElement} The root element of the fragment
+ * Loads a content fragment from AEM GraphQL endpoint.
+ * @param {string} path The path to the content fragment
+ * @returns {Object} The content fragment data
  */
 export async function loadFragment(path) {
-  if (path && path.startsWith('/')) {
-    // eslint-disable-next-line no-param-reassign
-    path = path.replace(/(\.plain)?\.html/, '');
-    const resp = await fetch(`${path}.plain.html`);
-    if (resp.ok) {
-      const main = document.createElement('main');
-      main.innerHTML = await resp.text();
-
-      // reset base path for media to fragment base
-      const resetAttributeBase = (tag, attr) => {
-        main.querySelectorAll(`${tag}[${attr}^="./media_"]`).forEach((elem) => {
-          elem[attr] = new URL(
-            elem.getAttribute(attr),
-            new URL(path, window.location),
-          ).href;
-        });
-      };
-      resetAttributeBase('img', 'src');
-      resetAttributeBase('source', 'srcset');
-
-      decorateMain(main);
-      await loadSections(main);
-      return main;
-    }
+  if (!path) {
+    return null;
   }
+
+  // Remove leading slash if present
+  const fragmentPath = path.startsWith('/') ? path : `/${path}`;
+
+  // https://publish-p31104-e170504.adobeaemcloud.com/graphql/execute.json/gs/articleByPath;path=/content/dam/gs/fragments/fr/articles/article-1
+  const graphqlEndpoint = `https://publish-p31104-e170504.adobeaemcloud.com/graphql/execute.json/gs/articleByPath;path=${fragmentPath}`;
+
+  try {
+    const resp = await fetch(graphqlEndpoint);
+    if (resp.ok) {
+      const data = await resp.json();
+      return data;
+    }
+    // eslint-disable-next-line no-console
+    console.error(`Failed to load content fragment from ${graphqlEndpoint}`);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error fetching content fragment:', error);
+  }
+
   return null;
 }
 
+/**
+ * Decorates the content fragment block
+ * @param {Element} block The content fragment block element
+ */
 export default async function decorate(block) {
   const link = block.querySelector('a');
   const path = link ? link.getAttribute('href') : block.textContent.trim();
-  const fragment = await loadFragment(path);
-  if (fragment) {
-    const fragmentSection = fragment.querySelector(':scope .section');
-    if (fragmentSection) {
-      block.classList.add(...fragmentSection.classList);
-      block.classList.remove('section');
-      block.replaceChildren(...fragmentSection.childNodes);
+
+  // Clear the block
+  block.innerHTML = '';
+
+  // Add loading state
+  block.classList.add('loading');
+
+  const fragmentData = await loadFragment(path);
+
+  // Remove loading state
+  block.classList.remove('loading');
+
+  if (
+    fragmentData &&
+    fragmentData.data &&
+    fragmentData.data.articleByPath &&
+    fragmentData.data.articleByPath.item
+  ) {
+    const article = fragmentData.data.articleByPath.item;
+
+    // Create article container
+    const articleContainer = document.createElement('div');
+    articleContainer.classList.add('content-fragment-article');
+
+    // Add category if available
+    if (article.category) {
+      const category = document.createElement('span');
+      category.classList.add('content-fragment-category');
+      category.textContent = article.category;
+      articleContainer.appendChild(category);
     }
+
+    // Add title if available
+    if (article.title) {
+      const title = document.createElement('h2');
+      title.classList.add('content-fragment-title');
+      title.textContent = article.title;
+      articleContainer.appendChild(title);
+    }
+
+    // Add image if available
+    // eslint-disable-next-line no-underscore-dangle
+    if (article.image && article.image._dynamicUrl) {
+      const imageWrapper = document.createElement('div');
+      imageWrapper.classList.add('content-fragment-image-wrapper');
+
+      const img = document.createElement('img');
+      img.classList.add('content-fragment-image');
+      // eslint-disable-next-line no-underscore-dangle
+      img.src = `https://author-p31104-e170504.adobeaemcloud.com${article.image._dynamicUrl}`;
+      img.alt = article.title || 'Content fragment image';
+      img.loading = 'lazy';
+
+      imageWrapper.appendChild(img);
+      articleContainer.appendChild(imageWrapper);
+    }
+
+    // Add description if available
+    if (article.description) {
+      const description = document.createElement('div');
+      description.classList.add('content-fragment-description');
+      description.innerHTML = article.description.html || article.description;
+      articleContainer.appendChild(description);
+    }
+
+    block.appendChild(articleContainer);
+  } else {
+    // Show error message
+    const error = document.createElement('p');
+    error.classList.add('content-fragment-error');
+    error.textContent = 'Content fragment could not be loaded.';
+    block.appendChild(error);
   }
 }
