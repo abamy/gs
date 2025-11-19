@@ -335,3 +335,19 @@ main .section.dark > h5,
 main .section.dark > h6 {
     color: var(--color-primary-base);
 }
+
+main .section.dark {
+    background-color: var(--color-primary-base);
+    margin: 0;
+    padding: 40px 0;
+    color: var(--gray-color);
+}
+
+main .section.dark > h1,
+main .section.dark > h2,
+main .section.dark > h3,
+main .section.dark > h4,
+main .section.dark > h5,
+main .section.dark > h6 {
+    color: var(--gray-color);
+}

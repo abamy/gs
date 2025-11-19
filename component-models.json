@@ -140,6 +140,10 @@
           {
             "name": "Dark",
             "value": "dark"
+          },
+          {
+            "name": "Red",
+            "value": "red"
           }
         ]
       }
