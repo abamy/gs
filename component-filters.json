@@ -25,7 +25,8 @@
       "3d-viewer",
       "search",
       "services",
-      "video"
+      "video",
+      "embed"
     ]
   },
   {
@@ -46,6 +47,6 @@
   },
   {
     "id": "column",
-    "components": ["text", "image", "button", "title", "video"]
+    "components": ["text", "image", "button", "title", "video", "embed"]
   }
 ]

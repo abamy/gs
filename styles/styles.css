@@ -351,3 +351,16 @@ main .section.red > h5,
 main .section.red > h6 {
     color: var(--gray-color);
 }
+
+a.button:any-link,
+button .red {
+    background-color: var(--gray-color);
+    border: 2px solid var(--color-primary-base);
+    color: var(--background-color);
+}
+
+a.button:any-link:hover,
+button .red:hover {
+    background-color: var(--background-color);
+    color: var(--color-primary-base);
+}
