@@ -16,6 +16,8 @@
       "login-modal",
       "columns",
       "fragment",
+      "content-fragment",
+      "button",
       "carousel",
       "teaser",
       "articles",
