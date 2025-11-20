@@ -1,4 +1,12 @@
 import {
+  initMartech,
+  updateUserConsent,
+  martechEager,
+  martechLazy,
+  martechDelayed,
+} from '../plugins/martech/src/index.js';
+
+import {
   loadHeader,
   loadFooter,
   decorateButtons,
@@ -10,6 +18,7 @@ import {
   loadSection,
   loadSections,
   loadCSS,
+  getMetadata
 } from './aem.js';
 
 /**
@@ -42,7 +51,10 @@ export function moveInstrumentation(from, to) {
     to,
     [...from.attributes]
       .map(({ nodeName }) => nodeName)
-      .filter((attr) => attr.startsWith('data-aue-') || attr.startsWith('data-richtext-')),
+      .filter(
+        (attr) =>
+          attr.startsWith('data-aue-') || attr.startsWith('data-richtext-'),
+      ),
   );
 }
 
@@ -52,7 +64,8 @@ export function moveInstrumentation(from, to) {
 async function loadFonts() {
   await loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
   try {
-    if (!window.location.hostname.includes('localhost')) sessionStorage.setItem('fonts-loaded', 'true');
+    if (!window.location.hostname.includes('localhost'))
+      sessionStorage.setItem('fonts-loaded', 'true');
   } catch (e) {
     // do nothing
   }
@@ -90,13 +103,45 @@ export function decorateMain(main) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
+  // Hook in your consent check to determine if personalization can run.
+  const isConsentGiven = true; /* your consent logic here */
+
+  const martechLoadedPromise = initMartech(
+    // 1. WebSDK Configuration
+    // Docs: https://experienceleague.adobe.com/en/docs/experience-platform/web-sdk/commands/configure/overview#configure-js
+    {
+      datastreamId: '45c4436d-f1d5-47ed-bc66-e0ab9eddcd44',
+      orgId: '60E958AC5BBF28E50A495CDA@AdobeOrg',
+      // The `debugEnabled` flag is automatically set to true on localhost and .page URLs.
+      // The `defaultConsent` is automatically set to "pending".
+      onBeforeEventSend: (payload) => {
+        // This callback allows you to modify the payload before it's sent.
+        // Return false to prevent the event from being sent.
+      },
+      edgeConfigOverrides: {
+        // Optional datastream overrides for different environments.
+      },
+    },
+    // 2. Library Configuration
+    {
+      personalization: true,
+      launchUrls: [
+        'https://assets.adobedtm.com/0e50a3fdd0de/d27b4e4cc898/launch-9234fc2989d2.min.js'
+      ],
+      // See the API Reference for all available options.
+    },
+  );
+
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
     document.body.classList.add('appear');
-    await loadSection(main.querySelector('.section'), waitForFirstImage);
+    await Promise.all([
+      martechLoadedPromise.then(martechEager),
+      loadSection(main.querySelector('.section'), waitForFirstImage),
+    ]);
   }
 
   try {
@@ -123,6 +168,7 @@ async function loadLazy(doc) {
 
   loadHeader(doc.querySelector('header'));
   loadFooter(doc.querySelector('footer'));
+  await martechLazy();
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
@@ -142,6 +188,7 @@ async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
+  martechDelayed();
 }
 
 loadPage();
