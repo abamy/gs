@@ -142,6 +142,10 @@ if (!window.location.href.includes('/master/')) {
   meta.name = 'urn:adobe:aue:config:disable';
   meta.content = 'duplicate,copy';
   document.getElementsByTagName('head')[0].appendChild(meta);
+  const meta1 = document.createElement('meta');
+  meta1.name = 'urn:adobe:aue:config:preview';
+  meta1.content = 'http://main--gs--abamy.aem.live/';
+  document.getElementsByTagName('head')[1].appendChild(meta1);
 
   document.querySelectorAll('[data-aue-type]').forEach((el) => {
     if (
