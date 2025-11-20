@@ -84,7 +84,8 @@
 
 .content-container a:hover {
     text-decoration: none;
-    color: var(--primary-color);
+    background-color: var(--color-primary-hover);
+    box-shadow: inset 0 0 0 .1rem var(--color-primary-hover);
 }
 
 .highlight {

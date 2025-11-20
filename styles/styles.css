@@ -18,6 +18,7 @@
         94.8497854077%,
         45.6862745098%
     );
+    --color-primary-hover: hsl(2.2058823529deg, 63.5514018692%, 41.9607843137%);
     --primary-color-dark: hsl(2.2058823529deg, 63.5514018692%, 41.9607843137%);
     --primary-color-darker: hsl(5.4545454545deg, 53.1034482759%, 28.431372549%);
     --secondary-color: #f1f1f1;
@@ -248,9 +249,9 @@ a.button:focus,
 button:hover,
 button:focus {
     cursor: pointer;
-    background-color: var(--primary-color);
+    background-color: var(--color-primary-base);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(193, 48, 4, 0.3);
+    box-shadow: inset 0 0 0 .1rem var(--color-primary-hover);
 }
 
 button:disabled,
@@ -354,13 +355,12 @@ main .section.red > h6 {
 
 a.button:any-link,
 button .red {
-    background-color: var(--gray-color);
     border: 2px solid var(--color-primary-base);
     color: var(--background-color);
 }
 
 a.button:any-link:hover,
 button .red:hover {
-    background-color: var(--background-color);
-    color: var(--color-primary-base);
+    background-color: var(--color-primary-hover);
+    box-shadow: inset 0 0 0 .1rem var(--color-primary-hover);
 }
