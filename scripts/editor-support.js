@@ -142,10 +142,11 @@ if (!window.location.href.includes('/master/')) {
   meta.name = 'urn:adobe:aue:config:disable';
   meta.content = 'duplicate,copy';
   document.getElementsByTagName('head')[0].appendChild(meta);
-  const meta1 = document.createElement('meta');
-  meta1.name = 'urn:adobe:aue:config:preview';
-  meta1.content = 'http://main--gs--abamy.aem.live/';
-  document.getElementsByTagName('head')[0].appendChild(meta1);
+  const metaPreview = document.createElement('meta');
+  metaPreview.name = 'urn:adobe:aue:config:preview';
+  const path = window.location.href.replace('/content/gs', '').replace('/templates/', '/pages/').replace('.html', '');
+  metaPreview.content = `http://main--gs--abamy.aem.live${path}`;
+  document.getElementsByTagName('head')[0].appendChild(metaPreview);
 
   document.querySelectorAll('[data-aue-type]').forEach((el) => {
     if (
