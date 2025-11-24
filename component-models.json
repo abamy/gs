@@ -216,9 +216,12 @@
     "id": "content-fragment",
     "fields": [
       {
-        "component": "aem-content",
+        "component": "aem-content-fragment",
         "name": "reference",
-        "label": "Reference"
+        "label": "Reference",
+        "validation": {
+          "rootPath": "/content/dam"
+        }
       }
     ]
   },
