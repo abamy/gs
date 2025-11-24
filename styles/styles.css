@@ -353,13 +353,6 @@ main .section.red > h6 {
     color: var(--gray-color);
 }
 
-a.button:any-link,
-button .red {
-    border: 2px solid var(--light-color);
-    background-color: 2px solid var(--light-color);
-    color: var(--color-primary-base);
-}
-
 a.button:any-link:hover,
 button .red:hover {
     background-color: var(--gray-color);
