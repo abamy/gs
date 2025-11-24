@@ -8,7 +8,7 @@
  * @param {string} path The path to the content fragment
  * @returns {Object} The content fragment data
  */
-export async function loadFragment(path) {
+export async function loadFragment(path, url) {
   if (!path) {
     return null;
   }
@@ -17,7 +17,7 @@ export async function loadFragment(path) {
   const fragmentPath = path.startsWith('/') ? path : `/${path}`;
 
   // https://publish-p31104-e170504.adobeaemcloud.com/graphql/execute.json/gs/articleByPath;path=/content/dam/gs/fragments/fr/articles/article-1
-  const graphqlEndpoint = `https://publish-p31104-e170504.adobeaemcloud.com/graphql/execute.json/gs/articleByPath;path=${fragmentPath}`;
+  const graphqlEndpoint = `${url}/graphql/execute.json/gs/articleByPath;path=${fragmentPath}`;
 
   try {
     const resp = await fetch(graphqlEndpoint);
@@ -43,13 +43,17 @@ export default async function decorate(block) {
   const link = block.querySelector('a');
   const path = link ? link.getAttribute('href') : block.textContent.trim();
 
+  const aemPublishUrl = 'https://publish-p31104-e170504.adobeaemcloud.com';
+  const aemAuthorUrl = 'https://authos-p31104-e170504.adobeaemcloud.com';
+  const url = window?.location?.origin.includes('author') ? `${aemAuthorUrl}` : `${aemPublishUrl}`;
+
   // Clear the block
   block.innerHTML = '';
 
   // Add loading state
   block.classList.add('loading');
 
-  const fragmentData = await loadFragment(path);
+  const fragmentData = await loadFragment(path, url);
 
   // Remove loading state
   block.classList.remove('loading');
@@ -91,7 +95,7 @@ export default async function decorate(block) {
       const img = document.createElement('img');
       img.classList.add('content-fragment-image');
       // eslint-disable-next-line no-underscore-dangle
-      img.src = `https://author-p31104-e170504.adobeaemcloud.com${article.image._dynamicUrl}`;
+      img.src = `${url}${article.image._dynamicUrl}`;
       img.alt = article.title || 'Content fragment image';
       img.loading = 'lazy';
 
