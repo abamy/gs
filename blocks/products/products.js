@@ -1,3 +1,5 @@
+import { getTranslation, getLanguageFromUrl } from '../../scripts/utils.js';
+
 function extractProductsFromBlock(block) {
   const products = [];
   const productDivs = block.querySelectorAll(':scope > div');
@@ -12,9 +14,7 @@ function extractProductsFromBlock(block) {
 
       // Price can be direct text or wrapped in <p>
       const priceElement = children[3]?.querySelector('p');
-      const price = priceElement
-        ? priceElement.textContent.trim()
-        : children[3]?.textContent.trim() || '';
+      const price = priceElement ? priceElement.textContent.trim() : children[3]?.textContent.trim() || '';
 
       // Picture can be direct <picture> or wrapped in <p>
       let picture = children[4]?.querySelector('picture');
@@ -29,7 +29,7 @@ function extractProductsFromBlock(block) {
         description,
         price,
         picture: picture ? picture.outerHTML : '',
-        index,
+        index
       });
     }
   });
@@ -69,11 +69,14 @@ export default async function decorate(block) {
     return;
   }
 
-  const productsHTML = products
-    .map((product) => buildProductCard(product))
-    .join('');
+  // Fetch translation for "Results"
+  const lang = getLanguageFromUrl();
+  const resultsText = await getTranslation('Results', lang);
+
+  const productsHTML = products.map(product => buildProductCard(product)).join('');
 
   const content = document.createRange().createContextualFragment(`
+    <div class="products-results-count"></div>
     <div class="products-grid">
       ${productsHTML}
     </div>
@@ -81,4 +84,49 @@ export default async function decorate(block) {
 
   block.textContent = '';
   block.append(content);
+
+  // Get reference to product cards and results counter
+  const productsGrid = block.querySelector('.products-grid');
+  const allProductCards = [...productsGrid.children];
+  const resultsCount = block.querySelector('.products-results-count');
+
+  // Function to update results count
+  function updateResultsCount(count) {
+    resultsCount.textContent = `${count} ${resultsText}`;
+  }
+
+  // Initialize with total count
+  updateResultsCount(allProductCards.length);
+
+  // Function to filter products (only by search term, no category filtering)
+  function filterProducts(searchTerm) {
+    const lowerSearchTerm = searchTerm.toLowerCase();
+    let visibleCount = 0;
+
+    allProductCards.forEach(card => {
+      const cardTitle = card.querySelector('.product-title')?.textContent.toLowerCase() || '';
+      const cardDescription = card.querySelector('.product-description')?.textContent.toLowerCase() || '';
+      const cardPrice = card.querySelector('.product-price')?.textContent.toLowerCase() || '';
+
+      const matchesSearch = !lowerSearchTerm ||
+        cardTitle.includes(lowerSearchTerm) ||
+        cardDescription.includes(lowerSearchTerm) ||
+        cardPrice.includes(lowerSearchTerm);
+
+      if (matchesSearch) {
+        card.style.display = '';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    updateResultsCount(visibleCount);
+  }
+
+  // Listen for search events from search block
+  document.addEventListener('search-filter-change', (event) => {
+    const { searchTerm } = event.detail;
+    filterProducts(searchTerm);
+  });
 }
