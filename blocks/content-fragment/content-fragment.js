@@ -44,7 +44,7 @@ export default async function decorate(block) {
   const path = link ? link.getAttribute('href') : block.textContent.trim();
 
   const aemPublishUrl = 'https://publish-p31104-e170504.adobeaemcloud.com';
-  const aemAuthorUrl = 'https://authos-p31104-e170504.adobeaemcloud.com';
+  const aemAuthorUrl = 'https://author-p31104-e170504.adobeaemcloud.com';
   const url = window?.location?.origin.includes('author') ? `${aemAuthorUrl}` : `${aemPublishUrl}`;
 
   // Clear the block
