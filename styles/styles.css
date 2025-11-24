@@ -272,7 +272,7 @@ button.secondary {
 a.button.secondary:hover,
 button.secondary:hover {
     background-color: var(--primary-color);
-    color: var(--background-color);
+    color: var(--color-primary-base);
 }
 
 main img {

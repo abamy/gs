@@ -15,10 +15,9 @@ async function applyChanges(event) {
   // redecorate default content and blocks on patches (in the properties rail)
   const { detail } = event;
 
-  const resource =
-    detail?.request?.target?.resource || // update, patch components
-    detail?.request?.target?.container?.resource || // update, patch, add to sections
-    detail?.request?.to?.container?.resource; // move in sections
+  const resource = detail?.request?.target?.resource // update, patch components
+    || detail?.request?.target?.container?.resource // update, patch, add to sections
+    || detail?.request?.to?.container?.resource; // move in sections
   if (!resource) return false;
   const updates = detail?.response?.updates;
   if (!updates.length) return false;
@@ -28,20 +27,13 @@ async function applyChanges(event) {
   // load dompurify
   await loadScript(`${window.hlx.codeBasePath}/scripts/dompurify.min.js`);
 
-  const sanitizedContent = window.DOMPurify.sanitize(content, {
-    USE_PROFILES: { html: true },
-  });
-  const parsedUpdate = new DOMParser().parseFromString(
-    sanitizedContent,
-    'text/html',
-  );
+  const sanitizedContent = window.DOMPurify.sanitize(content, { USE_PROFILES: { html: true } });
+  const parsedUpdate = new DOMParser().parseFromString(sanitizedContent, 'text/html');
   const element = document.querySelector(`[data-aue-resource="${resource}"]`);
 
   if (element) {
     if (element.matches('main')) {
-      const newMain = parsedUpdate.querySelector(
-        `[data-aue-resource="${resource}"]`,
-      );
+      const newMain = parsedUpdate.querySelector(`[data-aue-resource="${resource}"]`);
       newMain.style.display = 'none';
       element.insertAdjacentElement('afterend', newMain);
       decorateMain(newMain);
@@ -54,14 +46,10 @@ async function applyChanges(event) {
       return true;
     }
 
-    const block =
-      element.parentElement?.closest('.block[data-aue-resource]') ||
-      element?.closest('.block[data-aue-resource]');
+    const block = element.parentElement?.closest('.block[data-aue-resource]') || element?.closest('.block[data-aue-resource]');
     if (block) {
       const blockResource = block.getAttribute('data-aue-resource');
-      const newBlock = parsedUpdate.querySelector(
-        `[data-aue-resource="${blockResource}"]`,
-      );
+      const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
       if (newBlock) {
         newBlock.style.display = 'none';
         block.insertAdjacentElement('afterend', newBlock);
@@ -76,9 +64,7 @@ async function applyChanges(event) {
       }
     } else {
       // sections and default content, may be multiple in the case of richtext
-      const newElements = parsedUpdate.querySelectorAll(
-        `[data-aue-resource="${resource}"],[data-richtext-resource="${resource}"]`,
-      );
+      const newElements = parsedUpdate.querySelectorAll(`[data-aue-resource="${resource}"],[data-richtext-resource="${resource}"]`);
       if (newElements.length) {
         const { parentElement } = element;
         if (element.matches('.section')) {
@@ -115,13 +101,11 @@ function attachEventListners(main) {
     'aue:content-move',
     'aue:content-remove',
     'aue:content-copy',
-  ].forEach((eventType) =>
-    main?.addEventListener(eventType, async (event) => {
-      event.stopPropagation();
-      const applied = await applyChanges(event);
-      if (!applied) window.location.reload();
-    }),
-  );
+  ].forEach((eventType) => main?.addEventListener(eventType, async (event) => {
+    event.stopPropagation();
+    const applied = await applyChanges(event);
+    if (!applied) window.location.reload();
+  }));
 }
 
 attachEventListners(document.querySelector('main'));
@@ -132,28 +116,32 @@ decorateRichtext();
 // in cases where the block decoration is not done in one synchronous iteration we need to listen
 // for new richtext-instrumented elements. this happens for example when using experimentation.
 const observer = new MutationObserver(() => decorateRichtext());
-observer.observe(document, {
-  attributeFilter: ['data-richtext-prop'],
-  subtree: true,
-});
+observer.observe(document, { attributeFilter: ['data-richtext-prop'], subtree: true });
 
-if (!window.location.href.includes('/master/')) {
+
+const url = new URL(window.location.href).pathname;
+if (!url.includes('/master/')) {
   const meta = document.createElement('meta');
   meta.name = 'urn:adobe:aue:config:disable';
   meta.content = 'duplicate,copy';
   document.getElementsByTagName('head')[0].appendChild(meta);
+
   const metaPreview = document.createElement('meta');
   metaPreview.name = 'urn:adobe:aue:config:preview';
-  const path = window.location.href.replace('/content/gs', '').replace('/templates/', '/pages/').replace('.html', '');
-  metaPreview.content = `http://main--gs--abamy.aem.live${path}`;
-  document.getElementsByTagName('head')[0].appendChild(metaPreview);
+
+  const siteName = url.match(/\/content\/([^\/]+)/)[1];
+
+  const path = url
+    .replace(/\/content\/[^\/]+/, '')
+    .replace('/templates/', '/pages/')
+    .replace('.html', '');
+
+  metaPreview.content = `http://main--${siteName}--abamy.aem.page${path}`;
+  document.head.appendChild(metaPreview);
 
   document.querySelectorAll('[data-aue-type]').forEach((el) => {
-    if (
-      el.tagName.toLowerCase() === 'body' ||
-      el.getAttribute('data-aue-type') === 'container' ||
-      el.getAttribute('data-aue-type') === 'column'
-    ) {
+    if (el.tagName.toLowerCase() === 'body' || el.getAttribute('data-aue-type') === 'container' || el.getAttribute('data-aue-type') === 'column') {
+      el.removeAttribute('data-aue-resource');
       el.removeAttribute('data-aue-type');
     }
   });
