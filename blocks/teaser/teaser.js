@@ -1,5 +1,4 @@
 import { readBlockConfig, createOptimizedPicture } from '../../scripts/aem.js';
-import { getSiteNameFromDAM } from '../../scripts/utils.js';
 
 export default function decorate(block) {
   const config = readBlockConfig(block);
@@ -51,13 +50,15 @@ export default function decorate(block) {
 
           const imageElement = document.getElementById(`${blockId}-image`);
           // eslint-disable-next-line no-underscore-dangle
-          const imagePath = offerContent.image._path;
-          const siteName = getSiteNameFromDAM(imagePath);
-          const optimizedPicture = createOptimizedPicture(
-            imagePath.substring(`/content/dam/${siteName}`.length),
-            offerContent.imageDescription,
-          );
-          imageElement.innerHTML = optimizedPicture.outerHTML;
+          const imagePath = `https://publish-p31104-e170504.adobeaemcloud.com${offerContent.image._path}`;
+          //const imagePath = getDeliveryUrl(offerContent.image._path, '3590x1000');
+          imageElement.innerHTML = `
+            <picture>
+              <source media="(min-width: 600px)" type="image/webp" srcset="${imagePath}?width=750&amp;format=webply&amp;optimize=medium">
+              <source type="image/webp" srcset="${imagePath}?width=750&amp;format=webply&amp;optimize=medium">
+              <source media="(min-width: 600px)" srcset="${imagePath}?width=2000&amp;format=png&amp;optimize=medium">
+              <img loading="lazy" alt="Black Week Banner" src="${imagePath}?width=750&amp;format=png&amp;optimize=medium">
+            </picture>`;
         }
       }
     });
