@@ -1,10 +1,5 @@
 import { readBlockConfig, createOptimizedPicture } from '../../scripts/aem.js';
 import { getSiteNameFromDAM } from '../../scripts/utils.js';
-import {
-  isPersonalizationEnabled,
-  getPersonalizationForView,
-  applyPersonalization,
-} from '../../plugins/martech/src/index.js';
 
 export default function decorate(block) {
   const config = readBlockConfig(block);
@@ -30,45 +25,41 @@ export default function decorate(block) {
   block.append(content);
 
   if (config.offerzone) {
-    handleOffer();
+    alloy('sendEvent', {
+      decisionScopes: ['teaser-zone'],
+    }).then((result) => {
+      const { propositions } = result;
+      if (propositions) {
+        // Find the discount proposition, if it exists.
+        for (let i = 0; i < propositions.length; i += 1) {
+          const proposition = propositions[i];
+
+          const offerContent = proposition.items[0].data.content.data.offerByPath.item;
+
+          const titleElement = document.getElementById(`${blockId}-title`);
+          titleElement.innerHTML = offerContent.title;
+
+          const descriptionElement = document.getElementById(
+            `${blockId}-description`,
+          );
+          descriptionElement.innerHTML = offerContent.description.html;
+
+          const buttonElement = document.getElementById(`${blockId}-button`);
+          buttonElement.innerHTML = offerContent.buttonText;
+          // eslint-disable-next-line no-underscore-dangle
+          buttonElement.href = offerContent.buttonLink._path;
+
+          const imageElement = document.getElementById(`${blockId}-image`);
+          // eslint-disable-next-line no-underscore-dangle
+          const imagePath = offerContent.image._path;
+          const siteName = getSiteNameFromDAM(imagePath);
+          const optimizedPicture = createOptimizedPicture(
+            imagePath.substring(`/content/dam/${siteName}`.length),
+            offerContent.imageDescription,
+          );
+          imageElement.innerHTML = optimizedPicture.outerHTML;
+        }
+      }
+    });
   }
-}
-
-function handleOffer() {
-  adobe.target.getOffer({
-    mbox: config.offerzone,
-    params: {
-      logged: localStorage.getItem('logged'),
-      profileType: localStorage.getItem('profileType'),
-    },
-    success(offer) {
-      if (!offer.length) return;
-
-      const offerContent = offer[0].content[0].data.offerByPath.item;
-
-      const titleElement = document.getElementById(`${blockId}-title`);
-      titleElement.innerHTML = offerContent.title;
-
-      const descriptionElement = document.getElementById(
-        `${blockId}-description`,
-      );
-      descriptionElement.innerHTML = offerContent.description.html;
-
-      const buttonElement = document.getElementById(`${blockId}-button`);
-      buttonElement.innerHTML = offerContent.buttonText;
-      buttonElement.href = offerContent.buttonLink._path;
-
-      const imageElement = document.getElementById(`${blockId}-image`);
-      const imagePath = offerContent.image._path;
-      const siteName = getSiteNameFromDAM(imagePath);
-      const picture = createOptimizedPicture(
-        imagePath.substring(`/content/dam/${siteName}`.length),
-        offerContent.imageDescription,
-      );
-      imageElement.innerHTML = picture.outerHTML;
-    },
-    error(status, error) {
-      console.log('Error', status, error);
-    },
-  });
 }

@@ -114,6 +114,7 @@ async function loadEager(doc) {
       orgId: '60E958AC5BBF28E50A495CDA@AdobeOrg',
       // The `debugEnabled` flag is automatically set to true on localhost and .page URLs.
       // The `defaultConsent` is automatically set to "pending".
+      defaultConsent: 'in',
       onBeforeEventSend: (payload) => {
         // This callback allows you to modify the payload before it's sent.
         // Return false to prevent the event from being sent.
@@ -124,7 +125,7 @@ async function loadEager(doc) {
     },
     // 2. Library Configuration
     {
-      personalization: false,
+      personalization: true,
       launchUrls: [
         'https://assets.adobedtm.com/0e50a3fdd0de/d27b4e4cc898/launch-9234fc2989d2.min.js'
       ],
@@ -138,10 +139,12 @@ async function loadEager(doc) {
   if (main) {
     decorateMain(main);
     document.body.classList.add('appear');
-    await Promise.all([
-      martechLoadedPromise.then(martechEager),
-      loadSection(main.querySelector('.section'), waitForFirstImage),
-    ]);
+    loadSection(main.querySelector('.section'), waitForFirstImage)
+    await martechEager()
+    // await Promise.all([
+    //   martechLoadedPromise.then(martechEager),
+    //   loadSection(main.querySelector('.section'), waitForFirstImage),
+    // ]);
   }
 
   try {
@@ -180,7 +183,10 @@ async function loadLazy(doc) {
  */
 function loadDelayed() {
   // eslint-disable-next-line import/no-cycle
-  window.setTimeout(() => import('./delayed.js'), 3000);
+  window.setTimeout(() => {
+    martechDelayed();
+    import('./delayed.js');
+  }, 3000);
   // load anything that can be postponed to the latest here
 }
 
