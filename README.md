@@ -93,9 +93,9 @@ This plugin handles the initialization of these components directly to optimize 
 
 - **DO** ensure you have the `Adobe Client Data Layer` extension configured.
 
-:warning: **Legal Disclaimer:** This library defaults user consent to `pending` to comply with privacy regulations. Overriding this behavior to grant consent by default (e.g., setting it to `in`) without explicit user agreement may have significant legal implications under regulations like GDPR and CCPA. We strongly advise consulting with your legal team before altering the default consent handling.
+:warning: **Legal Disclaimer:** This library defaults user consent to `pending`. Setting user consent to `in` overrides this behavior to grant consent by default (i.e. without explicit end user agreement). Customers should consult with their own legal counsel to understand their privacy obligations and the appropriate use and configuration of this library.
 
-We also recommend using a proper consent management system.
+We also recommend using a consent management system.
 
 ## Installation
 
@@ -385,14 +385,20 @@ This project manages the on-page, self-hosted implementation of the Adobe Experi
 
 ### Integration with Adobe Launch
 
-In the AEP Web SDK extension settings within Adobe Launch, enable the **"Use existing alloy.js instance"** option.
+When using this project's self-hosted Adobe Experience Platform Web SDK implementation with Adobe Launch, the standard **AEP Web SDK** extension must be **removed** from your Launch property to avoid conflicts.
+To enable Launch Rules that depend on Web SDK events (such as "Send Event Complete"), you have two options:
 
-When this is checked:
-1.  The extension **will not** bundle a second copy of `alloy.js` into the Launch library.
-2.  The extension **will not** re-configure the SDK. It will use the instance that has already been configured on the page by this project.
-3.  All configuration settings within the Launch UI (e.g., Datastream ID, Org ID, Default Consent) will be ignored at runtime.
+#### Option 1: Use Direct Call Rules
+Configure your Launch Rules to use Direct Call Rules instead of Web SDK event triggers, and invoke them using custom code snippets within your Launch property.
 
-All SDK configuration must be handled within the scripts managed by this project.
+#### Option 2: Use the "AA via AEP Web SDK" Community Extension
+Install the "AA via AEP Web SDK" community extension in Launch. This extension creates mock Web SDK events that your existing Rules can reference, allowing them to function without the official AEP Web SDK extension installed.
+
+With either approach:
+
+1. The Launch library will not bundle a second copy of alloy.js.
+2. The Launch library will not attempt to re-configure the SDK.
+3. All SDK configuration (Datastream ID, Org ID, Default Consent, etc.) must be managed through this project's code as shown in the Configuration Reference section below.
 
 ### Configuration Reference
 
