@@ -25,7 +25,7 @@ export default function decorate(block) {
 
   if (config.offerzone) {
     alloy('sendEvent', {
-      decisionScopes: ['teaser-zone'],
+      decisionScopes: [config.offerzone],
     }).then((result) => {
       const { propositions } = result;
       if (propositions) {

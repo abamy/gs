@@ -139,12 +139,10 @@ async function loadEager(doc) {
   if (main) {
     decorateMain(main);
     document.body.classList.add('appear');
-    loadSection(main.querySelector('.section'), waitForFirstImage)
-    await martechEager()
-    // await Promise.all([
-    //   martechLoadedPromise.then(martechEager),
-    //   loadSection(main.querySelector('.section'), waitForFirstImage),
-    // ]);
+    await Promise.all([
+      martechLoadedPromise.then(martechEager),
+      loadSection(main.querySelector('.section'), waitForFirstImage),
+    ]);
   }
 
   try {
