@@ -10,3 +10,4 @@ helix-importer-ui
 .claude/
 .serena/
 .env
+.playwright-mcp

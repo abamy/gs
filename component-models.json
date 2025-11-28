@@ -136,8 +136,79 @@
           {
             "name": "Highlight",
             "value": "highlight"
+          },
+          {
+            "name": "Dark",
+            "value": "dark"
+          },
+          {
+            "name": "Red",
+            "value": "red"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "card",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "menuItem",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
+      }
+    ]
+  },
+  {
+    "id": "columns",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "columns",
+        "value": "",
+        "label": "Columns"
+      },
+      {
+        "component": "text",
+        "valueType": "number",
+        "name": "rows",
+        "value": "",
+        "label": "Rows"
+      }
+    ]
+  },
+  {
+    "id": "fragment",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "reference",
+        "label": "Reference"
       }
     ]
   },
@@ -159,14 +230,7 @@
         "value": "",
         "valueType": "string",
         "description": "Persisted variation for publish; leave empty for master.",
-        "condition": {
-          "==": [
-            {
-              "var": "__alwaysFalse"
-            },
-            true
-          ]
-        }
+        "condition": { "==": [{ "var": "__alwaysFalse" }, true] }
       },
       {
         "component": "select",
@@ -213,6 +277,267 @@
             "value": "text-center"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "hero",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Alt",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "teaser",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Default",
+        "name": "default"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "dropbox-media",
+        "valueType": "string",
+        "name": "dropboxMedia"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageDescription",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "buttonText",
+        "label": "Button Text"
+      },
+      {
+        "component": "aem-content",
+        "name": "buttonLink",
+        "label": "Button Link"
+      },
+      {
+        "component": "tab",
+        "label": "Offer",
+        "name": "offer"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "offerZone",
+        "label": "Zone",
+        "options": [
+          {
+            "name": "Teaser",
+            "value": "teaser-zone"
+          },
+          {
+            "name": "Carousel",
+            "value": "carousel-zone"
+          },
+          {
+            "name": "Navigation",
+            "value": "navigation-zone"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "login-modal",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "usernameLabel",
+        "label": "Username Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "profileTypeLabel",
+        "label": "Profile Type Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string[]",
+        "name": "profileTypeOptions",
+        "label": "Profile Type Options",
+        "multi": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cancelButtonLabel",
+        "label": "Cancel Button Label"
+      }
+    ]
+  },
+  {
+    "id": "3d-viewer",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "asset",
+        "label": "3D Asset",
+        "multi": false
+      }
+    ]
+  },
+  {
+    "id": "articles",
+    "fields": []
+  },
+  {
+    "id": "products",
+    "fields": [
+      {
+        "component": "commerce-category",
+        "name": "commerce-category",
+        "label": "Commerce Category",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "search",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "subtitle",
+        "label": "Subtitle"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "filters",
+        "label": "Filters",
+        "multi": true
+      }
+    ]
+  },
+  {
+    "id": "services",
+    "fields": []
+  },
+  {
+    "id": "video",
+    "fields": [
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "uri",
+        "label": "Video"
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Options",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Auto Play",
+            "children": [
+              {
+                "name": "AutoPlay",
+                "value": "autoplay"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "placeholder_image",
+        "label": "Placeholder Image",
+        "multi": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "placeholder_imageAlt",
+        "value": "",
+        "label": "Placeholder Image Alt Text"
+      }
+    ]
+  },
+  {
+    "id": "embed",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "embed_placeholder",
+        "label": "Placeholder Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "embed_placeholderAlt",
+        "value": "",
+        "label": "Placeholder Image Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "embed_uri",
+        "label": "URI"
       }
     ]
   }
