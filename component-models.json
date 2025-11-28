@@ -213,19 +213,6 @@
     ]
   },
   {
-    "id": "content-fragment",
-    "fields": [
-      {
-        "component": "aem-content-fragment",
-        "name": "reference",
-        "label": "Reference",
-        "validation": {
-          "rootPath": "/content/dam"
-        }
-      }
-    ]
-  },
-  {
     "id": "hero",
     "fields": [
       {
