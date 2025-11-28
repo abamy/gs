@@ -18,7 +18,7 @@ import {
   loadSection,
   loadSections,
   loadCSS,
-  getMetadata
+  getMetadata,
 } from './aem.js';
 
 /**
@@ -41,16 +41,10 @@ export function moveAttributes(from, to, attributes) {
 }
 
 export function isAuthorEnvironment() {
-  if(window?.location?.origin?.includes('author')){
+  if (window?.location?.origin?.includes('author')) {
     return true;
-  }else{
-    return false;
   }
-  /*
-  if(document.querySelector('*[data-aue-resource]') !== null){
-    return true;
-  }*/
-  //return false;
+  return false;
 }
 
 /**
@@ -140,7 +134,7 @@ async function loadEager(doc) {
     {
       personalization: true,
       launchUrls: [
-        'https://assets.adobedtm.com/0e50a3fdd0de/d27b4e4cc898/launch-9234fc2989d2.min.js'
+        'https://assets.adobedtm.com/0e50a3fdd0de/d27b4e4cc898/launch-9234fc2989d2.min.js',
       ],
       // See the API Reference for all available options.
     },

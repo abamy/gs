@@ -1,8 +1,5 @@
-import { getMetadata, readBlockConfig } from '../../scripts/aem.js';
-import {
-  isAuthorEnvironment,
-  moveInstrumentation,
-} from '../../scripts/scripts.js';
+import { getMetadata } from '../../scripts/aem.js';
+import { isAuthorEnvironment } from '../../scripts/scripts.js';
 import { getHostname } from '../../scripts/utils.js';
 
 /**
@@ -35,10 +32,6 @@ export default async function decorate(block) {
   const contentPath = block
     .querySelector(':scope div:nth-child(1) > div a')
     ?.textContent?.trim();
-  // const variationname = block.querySelector(':scope div:nth-child(2) > div')?.textContent?.trim()?.toLowerCase()?.replace(' ', '_') || 'master';
-
-  // console.log("variation : "+properties.variation);
-  // let variationname = properties.variation ? properties.variation : 'master';
 
   const variationname =
     block
@@ -187,11 +180,4 @@ export default async function decorate(block) {
     });
     block.innerHTML = '';
   }
-
-  /*
-  if (!isAuthor) {
-    moveInstrumentation(block, null);
-    block.querySelectorAll('*').forEach((elem) => moveInstrumentation(elem, null));
-  }
-	*/
 }
