@@ -1,7 +1,9 @@
 [
   {
     "id": "main",
-    "components": ["section"]
+    "components": [
+      "section"
+    ]
   },
   {
     "id": "section",
@@ -12,41 +14,8 @@
       "title",
       "hero",
       "cards",
-      "menu",
-      "login-modal",
       "columns",
-      "fragment",
-      "contentfragment",
-      "button",
-      "carousel",
-      "teaser",
-      "articles",
-      "products",
-      "3d-viewer",
-      "search",
-      "services",
-      "video",
-      "embed"
+      "fragment"
     ]
-  },
-  {
-    "id": "cards",
-    "components": ["card"]
-  },
-  {
-    "id": "menu",
-    "components": ["menuItem"]
-  },
-  {
-    "id": "carousel",
-    "components": ["teaser"]
-  },
-  {
-    "id": "columns",
-    "components": ["column"]
-  },
-  {
-    "id": "column",
-    "components": ["text", "image", "button", "title", "video", "embed"]
   }
 ]
