@@ -9,23 +9,22 @@ import { getHostname } from '../../scripts/utils.js';
 export default async function decorate(block) {
   // Configuration
   const CONFIG = {
-    WRAPPER_SERVICE_URL:
-      'https://3635370-refdemoapigateway-stage.adobeioruntime.net/api/v1/web/ref-demo-api-gateway/fetch-cf',
-    GRAPHQL_QUERY: '/graphql/execute.json/ref-demo-eds/CTAByPath',
+    GRAPHQL_QUERY: '/graphql/execute.json/gs/articleByPath',
     EXCLUDED_THEME_KEYS: new Set(['brandSite', 'brandLogo']),
   };
 
   const hostnameFromPlaceholders = await getHostname();
   const hostname = hostnameFromPlaceholders || getMetadata('hostname');
-  const aemauthorurl = getMetadata('authorurl') || '';
 
-  const aempublishurl = hostname
+  const aemauthorurl = getMetadata('authorurl') || 'https://author-p31104-e170504.adobeaemcloud.com';
+
+  const aempublishurl = aemauthorurl
     ?.replace('author', 'publish')
     ?.replace(/\/$/, '');
 
   // const aempublishurl = getMetadata('publishurl') || '';
 
-  const persistedquery = '/graphql/execute.json/ref-demo-eds/CTAByPath';
+  const persistedquery = '/graphql/execute.json/gs/articleByPath';
 
   // const properties = readBlockConfig(block);
 
@@ -53,22 +52,11 @@ export default async function decorate(block) {
   const isAuthor = isAuthorEnvironment();
 
   // Prepare request configuration based on environment
-  const requestConfig = isAuthor
-    ? {
-        url: `${aemauthorurl}${CONFIG.GRAPHQL_QUERY};path=${contentPath};variation=${variationname};ts=${Date.now()}`,
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      }
-    : {
-        url: `${CONFIG.WRAPPER_SERVICE_URL}`,
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          graphQLPath: `${aempublishurl}${CONFIG.GRAPHQL_QUERY}`,
-          cfPath: contentPath,
-          variation: `${variationname};ts=${Date.now()}`,
-        }),
-      };
+  const requestConfig = {
+    url: `${isAuthor ? aemauthorurl : aempublishurl}${CONFIG.GRAPHQL_QUERY};path=${contentPath};variation=${variationname};ts=${Date.now()}`,
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  };
 
   try {
     // Fetch data
@@ -105,7 +93,7 @@ export default async function decorate(block) {
       return;
     }
 
-    const cfReq = offer?.data?.ctaByPath?.item;
+    const cfReq = offer?.data?.articleByPath.item;
 
     if (!cfReq) {
       console.error(
@@ -123,8 +111,8 @@ export default async function decorate(block) {
     const itemId = `urn:aemconnection:${contentPath}/jcr:content/data/${variationname}`;
     block.setAttribute('data-aue-type', 'container');
     const imgUrl = isAuthor
-      ? cfReq.bannerimage?._authorUrl
-      : cfReq.bannerimage?._publishUrl;
+      ? cfReq.image?._authorUrl
+      : cfReq.image?._publishUrl;
 
     // Determine the layout style
     const isImageLeft = displayStyle === 'image-left';
@@ -155,9 +143,8 @@ export default async function decorate(block) {
 
     block.innerHTML = `<div class='banner-content block ${displayStyle}' data-aue-resource=${itemId} data-aue-label=${variationname || 'Elements'} data-aue-type="reference" data-aue-filter="contentfragment" style="${bannerContentStyle}">
           <div class='banner-detail ${alignment}' style="${bannerDetailStyle}" data-aue-prop="bannerimage" data-aue-label="Main Image" data-aue-type="media" >
-                <p data-aue-prop="title" data-aue-label="Title" data-aue-type="text" class='cftitle'>${cfReq?.title}</p>
-                <p data-aue-prop="subtitle" data-aue-label="SubTitle" data-aue-type="text" class='cfsubtitle'>${cfReq?.subtitle}</p>
-
+                <p data-aue-prop="title" data-aue-label="Title" data-aue-type="text" class='cftitle'>${cfReq.title ? cfReq.title : ''}</p>
+                <p data-aue-prop="subtitle" data-aue-label="SubTitle" data-aue-type="text" class='cfsubtitle'>${cfReq.subtitle ? cfReq.subtitle : ''}</p>
                 <div data-aue-prop="description" data-aue-label="Description" data-aue-type="richtext" class='cfdescription'><p>${cfReq?.description?.plaintext || ''}</p></div>
                  <p class="button-container ${ctaStyle}">
                   <a href="${cfReq?.ctaUrl ? cfReq.ctaUrl : '#'}" data-aue-prop="ctaUrl" data-aue-label="Button Link/URL" data-aue-type="reference"  target="_blank" rel="noopener" data-aue-filter="page" class='button'>
