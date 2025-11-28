@@ -1,145 +1,166 @@
-import { getMetadata } from '../../scripts/aem.js';
-import { isAuthorEnvironment, moveInstrumentation } from '../../scripts/scripts.js';
+import { getMetadata, readBlockConfig } from '../../scripts/aem.js';
+import {
+  isAuthorEnvironment,
+  moveInstrumentation,
+} from '../../scripts/scripts.js';
 import { getHostname } from '../../scripts/utils.js';
-import { readBlockConfig } from '../../scripts/aem.js';
 
 /**
  *
  * @param {Element} block
  */
 export default async function decorate(block) {
-	// Configuration
+  // Configuration
   const CONFIG = {
-    WRAPPER_SERVICE_URL: 'https://3635370-refdemoapigateway-stage.adobeioruntime.net/api/v1/web/ref-demo-api-gateway/fetch-cf',
+    WRAPPER_SERVICE_URL:
+      'https://3635370-refdemoapigateway-stage.adobeioruntime.net/api/v1/web/ref-demo-api-gateway/fetch-cf',
     GRAPHQL_QUERY: '/graphql/execute.json/ref-demo-eds/CTAByPath',
-    EXCLUDED_THEME_KEYS: new Set(['brandSite', 'brandLogo'])
+    EXCLUDED_THEME_KEYS: new Set(['brandSite', 'brandLogo']),
   };
 
   const hostnameFromPlaceholders = await getHostname();
-	const hostname = hostnameFromPlaceholders ? hostnameFromPlaceholders : getMetadata('hostname');
+  const hostname = hostnameFromPlaceholders || getMetadata('hostname');
   const aemauthorurl = getMetadata('authorurl') || '';
 
-  const aempublishurl = hostname?.replace('author', 'publish')?.replace(/\/$/, '');
+  const aempublishurl = hostname
+    ?.replace('author', 'publish')
+    ?.replace(/\/$/, '');
 
-	//const aempublishurl = getMetadata('publishurl') || '';
+  // const aempublishurl = getMetadata('publishurl') || '';
 
   const persistedquery = '/graphql/execute.json/ref-demo-eds/CTAByPath';
 
-	//const properties = readBlockConfig(block);
+  // const properties = readBlockConfig(block);
 
+  const contentPath = block
+    .querySelector(':scope div:nth-child(1) > div a')
+    ?.textContent?.trim();
+  // const variationname = block.querySelector(':scope div:nth-child(2) > div')?.textContent?.trim()?.toLowerCase()?.replace(' ', '_') || 'master';
 
-  const contentPath = block.querySelector(':scope div:nth-child(1) > div a')?.textContent?.trim();
-  //const variationname = block.querySelector(':scope div:nth-child(2) > div')?.textContent?.trim()?.toLowerCase()?.replace(' ', '_') || 'master';
+  // console.log("variation : "+properties.variation);
+  // let variationname = properties.variation ? properties.variation : 'master';
 
-	//console.log("variation : "+properties.variation);
-	//let variationname = properties.variation ? properties.variation : 'master';
-
-	const variationname = block.querySelector(':scope div:nth-child(2) > div')?.textContent?.trim()?.toLowerCase()?.replace(' ', '_') || 'master';
-	const displayStyle = block.querySelector(':scope div:nth-child(3) > div')?.textContent?.trim() || '';
-	const alignment = block.querySelector(':scope div:nth-child(4) > div')?.textContent?.trim() || '';
-  const ctaStyle = block.querySelector(':scope div:nth-child(5) > div')?.textContent?.trim() || 'button';
+  const variationname =
+    block
+      .querySelector(':scope div:nth-child(2) > div')
+      ?.textContent?.trim()
+      ?.toLowerCase()
+      ?.replace(' ', '_') || 'master';
+  const displayStyle =
+    block.querySelector(':scope div:nth-child(3) > div')?.textContent?.trim() ||
+    '';
+  const alignment =
+    block.querySelector(':scope div:nth-child(4) > div')?.textContent?.trim() ||
+    '';
+  const ctaStyle =
+    block.querySelector(':scope div:nth-child(5) > div')?.textContent?.trim() ||
+    'button';
 
   block.innerHTML = '';
   const isAuthor = isAuthorEnvironment();
 
-	// Prepare request configuration based on environment
-	const requestConfig = isAuthor
-  ? {
-      url: `${aemauthorurl}${CONFIG.GRAPHQL_QUERY};path=${contentPath};variation=${variationname};ts=${Date.now()}`,
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+  // Prepare request configuration based on environment
+  const requestConfig = isAuthor
+    ? {
+        url: `${aemauthorurl}${CONFIG.GRAPHQL_QUERY};path=${contentPath};variation=${variationname};ts=${Date.now()}`,
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    : {
+        url: `${CONFIG.WRAPPER_SERVICE_URL}`,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          graphQLPath: `${aempublishurl}${CONFIG.GRAPHQL_QUERY}`,
+          cfPath: contentPath,
+          variation: `${variationname};ts=${Date.now()}`,
+        }),
+      };
+
+  try {
+    // Fetch data
+    const response = await fetch(requestConfig.url, {
+      method: requestConfig.method,
+      headers: requestConfig.headers,
+      ...(requestConfig.body && { body: requestConfig.body }),
+    });
+
+    if (!response.ok) {
+      console.error(`error making cf graphql request:${response.status}`, {
+        error: error.message,
+        stack: error.stack,
+        contentPath,
+        variationname,
+        isAuthor,
+      });
+      block.innerHTML = '';
+      return; // Exit early if response is not ok
     }
-  : {
-      url: `${CONFIG.WRAPPER_SERVICE_URL}`,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        graphQLPath: `${aempublishurl}${CONFIG.GRAPHQL_QUERY}`,
-        cfPath: contentPath,
-        variation: `${variationname};ts=${Date.now()}`
-      })
-    };
 
+    let offer;
     try {
-        // Fetch data
-        const response = await fetch(requestConfig.url, {
-          method: requestConfig.method,
-          headers: requestConfig.headers,
-          ...(requestConfig.body && { body: requestConfig.body })
-        });
+      offer = await response.json();
+    } catch (parseError) {
+      console.error('Error parsing offer JSON from response:', {
+        error: error.message,
+        stack: error.stack,
+        contentPath,
+        variationname,
+        isAuthor,
+      });
+      block.innerHTML = '';
+      return;
+    }
 
-        if (!response.ok) {
-					console.error(`error making cf graphql request:${response.status}`, {
-	          error: error.message,
-	          stack: error.stack,
-	          contentPath,
-	          variationname,
-	          isAuthor
-        	});
-          block.innerHTML = '';
-          return; // Exit early if response is not ok
-        }
+    const cfReq = offer?.data?.ctaByPath?.item;
 
-        let offer;
-        try {
-          offer = await response.json();
-        } catch (parseError) {
-					console.error('Error parsing offer JSON from response:', {
-	          error: error.message,
-	          stack: error.stack,
-	          contentPath,
-	          variationname,
-	          isAuthor
-        	});
-          block.innerHTML = '';
-          return;
-        }
+    if (!cfReq) {
+      console.error(
+        'Error parsing response from GraphQL request - no valid data found',
+        {
+          response: offer,
+          contentPath,
+          variationname,
+        },
+      );
+      block.innerHTML = '';
+      return; // Exit early if no valid data
+    }
+    // Set up block attributes
+    const itemId = `urn:aemconnection:${contentPath}/jcr:content/data/${variationname}`;
+    block.setAttribute('data-aue-type', 'container');
+    const imgUrl = isAuthor
+      ? cfReq.bannerimage?._authorUrl
+      : cfReq.bannerimage?._publishUrl;
 
-        const cfReq = offer?.data?.ctaByPath?.item;
+    // Determine the layout style
+    const isImageLeft = displayStyle === 'image-left';
+    const isImageRight = displayStyle === 'image-right';
+    const isImageTop = displayStyle === 'image-top';
+    const isImageBottom = displayStyle === 'image-bottom';
 
-        if (!cfReq) {
-          console.error('Error parsing response from GraphQL request - no valid data found', {
-            response: offer,
-            contentPath,
-            variationname
-          });
-          block.innerHTML = '';
-          return; // Exit early if no valid data
-        }
-        // Set up block attributes
-        const itemId = `urn:aemconnection:${contentPath}/jcr:content/data/${variationname}`;
-        block.setAttribute('data-aue-type', 'container');
-        const imgUrl = isAuthor ? cfReq.bannerimage?._authorUrl : cfReq.bannerimage?._publishUrl;
+    // Set background image and styles based on layout
+    let bannerContentStyle = '';
+    let bannerDetailStyle = '';
 
-        // Determine the layout style
-        const isImageLeft = displayStyle === 'image-left';
-        const isImageRight = displayStyle === 'image-right';
-        const isImageTop = displayStyle === 'image-top';
-        const isImageBottom = displayStyle === 'image-bottom';
+    if (isImageLeft) {
+      // Image-left layout: image on left, text on right
+      bannerContentStyle = `background-image: url(${imgUrl});`;
+    } else if (isImageRight) {
+      // Image-right layout: image on right, text on left
+      bannerContentStyle = `background-image: url(${imgUrl});`;
+    } else if (isImageTop) {
+      // Image-top layout: image on top, text on bottom
+      bannerContentStyle = `background-image: url(${imgUrl});`;
+    } else if (isImageBottom) {
+      // Image-bottom layout: text on top, image on bottom
+      bannerContentStyle = `background-image: url(${imgUrl});`;
+    } else {
+      // Default layout: image as background with gradient overlay (original behavior)
+      bannerDetailStyle = `background-image: linear-gradient(90deg,rgba(0,0,0,0.6), rgba(0,0,0,0.1) 80%) ,url(${imgUrl});`;
+    }
 
-
-        // Set background image and styles based on layout
-        let bannerContentStyle = '';
-        let bannerDetailStyle = '';
-
-        if (isImageLeft) {
-          // Image-left layout: image on left, text on right
-          bannerContentStyle = 'background-image: url('+imgUrl+');';
-        } else if (isImageRight) {
-          // Image-right layout: image on right, text on left
-          bannerContentStyle = 'background-image: url('+imgUrl+');';
-        } else if (isImageTop) {
-          // Image-top layout: image on top, text on bottom
-          bannerContentStyle = 'background-image: url('+imgUrl+');';
-        } else if (isImageBottom) {
-          // Image-bottom layout: text on top, image on bottom
-          bannerContentStyle = 'background-image: url('+imgUrl+');';
-        }  else {
-          // Default layout: image as background with gradient overlay (original behavior)
-          bannerDetailStyle = 'background-image: linear-gradient(90deg,rgba(0,0,0,0.6), rgba(0,0,0,0.1) 80%) ,url('+imgUrl+');';
-        }
-
-      block.innerHTML = `<div class='banner-content block ${displayStyle}' data-aue-resource=${itemId} data-aue-label=${variationname ||"Elements"} data-aue-type="reference" data-aue-filter="contentfragment" style="${bannerContentStyle}">
+    block.innerHTML = `<div class='banner-content block ${displayStyle}' data-aue-resource=${itemId} data-aue-label=${variationname || 'Elements'} data-aue-type="reference" data-aue-filter="contentfragment" style="${bannerContentStyle}">
           <div class='banner-detail ${alignment}' style="${bannerDetailStyle}" data-aue-prop="bannerimage" data-aue-label="Main Image" data-aue-type="media" >
                 <p data-aue-prop="title" data-aue-label="Title" data-aue-type="text" class='cftitle'>${cfReq?.title}</p>
                 <p data-aue-prop="subtitle" data-aue-label="SubTitle" data-aue-type="text" class='cfsubtitle'>${cfReq?.subtitle}</p>
@@ -156,20 +177,18 @@ export default async function decorate(block) {
             <div class='banner-logo'>
             </div>
         </div>`;
+  } catch (error) {
+    console.error('Error rendering content fragment:', {
+      error: error.message,
+      stack: error.stack,
+      contentPath,
+      variationname,
+      isAuthor,
+    });
+    block.innerHTML = '';
+  }
 
-
-      } catch (error) {
-        console.error('Error rendering content fragment:', {
-          error: error.message,
-          stack: error.stack,
-          contentPath,
-          variationname,
-          isAuthor
-        });
-        block.innerHTML = '';
-      }
-
-	/*
+  /*
   if (!isAuthor) {
     moveInstrumentation(block, null);
     block.querySelectorAll('*').forEach((elem) => moveInstrumentation(elem, null));
