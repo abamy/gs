@@ -1,0 +1,35 @@
+{
+  "definitions": [
+    {
+      "title": "3D Viewer",
+      "id": "3d-viewer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "3D Viewer",
+              "model": "3d-viewer",
+              "key-value": true
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "3d-viewer",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "asset",
+          "label": "3D Asset",
+          "multi": false
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

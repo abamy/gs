@@ -136,18 +136,26 @@
           {
             "name": "Highlight",
             "value": "highlight"
-          },
-          {
-            "name": "Dark",
-            "value": "dark"
-          },
-          {
-            "name": "Red",
-            "value": "red"
           }
         ]
       }
     ]
+  },
+  {
+    "id": "3d-viewer",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "asset",
+        "label": "3D Asset",
+        "multi": false
+      }
+    ]
+  },
+  {
+    "id": "articles",
+    "fields": []
   },
   {
     "id": "card",
@@ -165,21 +173,6 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "menuItem",
-    "fields": [
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Title"
-      },
-      {
-        "component": "aem-content",
-        "name": "link",
-        "label": "Link"
       }
     ]
   },
@@ -203,16 +196,6 @@
     ]
   },
   {
-    "id": "fragment",
-    "fields": [
-      {
-        "component": "aem-content",
-        "name": "reference",
-        "label": "Reference"
-      }
-    ]
-  },
-  {
     "id": "contentfragment",
     "fields": [
       {
@@ -230,7 +213,14 @@
         "value": "",
         "valueType": "string",
         "description": "Persisted variation for publish; leave empty for master.",
-        "condition": { "==": [{ "var": "__alwaysFalse" }, true] }
+        "condition": {
+          "==": [
+            {
+              "var": "__alwaysFalse"
+            },
+            true
+          ]
+        }
       },
       {
         "component": "select",
@@ -281,6 +271,41 @@
     ]
   },
   {
+    "id": "embed",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "embed_placeholder",
+        "label": "Placeholder Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "embed_placeholderAlt",
+        "value": "",
+        "label": "Placeholder Image Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "embed_uri",
+        "label": "URI"
+      }
+    ]
+  },
+  {
+    "id": "fragment",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "reference",
+        "label": "Reference"
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {
@@ -305,6 +330,115 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "login-modal",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "usernameLabel",
+        "label": "Username Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "profileTypeLabel",
+        "label": "Profile Type Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string[]",
+        "name": "profileTypeOptions",
+        "label": "Profile Type Options",
+        "multi": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cancelButtonLabel",
+        "label": "Cancel Button Label"
+      }
+    ]
+  },
+  {
+    "id": "menuItem",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
+      }
+    ]
+  },
+  {
+    "id": "products",
+    "fields": [
+      {
+        "component": "commerce-category",
+        "name": "commerce-category",
+        "label": "Commerce Category",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "quote",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "author",
+        "label": "Author",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "search",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "subtitle",
+        "label": "Subtitle"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "filters",
+        "label": "Filters",
+        "multi": true
+      }
+    ]
+  },
+  {
+    "id": "services",
+    "fields": []
   },
   {
     "id": "teaser",
@@ -383,97 +517,6 @@
     ]
   },
   {
-    "id": "login-modal",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "title",
-        "label": "Title"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "usernameLabel",
-        "label": "Username Label"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "profileTypeLabel",
-        "label": "Profile Type Label"
-      },
-      {
-        "component": "text",
-        "valueType": "string[]",
-        "name": "profileTypeOptions",
-        "label": "Profile Type Options",
-        "multi": true
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "cancelButtonLabel",
-        "label": "Cancel Button Label"
-      }
-    ]
-  },
-  {
-    "id": "3d-viewer",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "asset",
-        "label": "3D Asset",
-        "multi": false
-      }
-    ]
-  },
-  {
-    "id": "articles",
-    "fields": []
-  },
-  {
-    "id": "products",
-    "fields": [
-      {
-        "component": "commerce-category",
-        "name": "commerce-category",
-        "label": "Commerce Category",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "search",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "title",
-        "label": "Title"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "subtitle",
-        "label": "Subtitle"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "filters",
-        "label": "Filters",
-        "multi": true
-      }
-    ]
-  },
-  {
-    "id": "services",
-    "fields": []
-  },
-  {
     "id": "video",
     "fields": [
       {
@@ -513,31 +556,6 @@
         "name": "placeholder_imageAlt",
         "value": "",
         "label": "Placeholder Image Alt Text"
-      }
-    ]
-  },
-  {
-    "id": "embed",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "embed_placeholder",
-        "label": "Placeholder Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "embed_placeholderAlt",
-        "value": "",
-        "label": "Placeholder Image Alt Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "embed_uri",
-        "label": "URI"
       }
     ]
   }
