@@ -43,14 +43,24 @@
     {
       "id": "section",
       "components": [
-        "text",
-        "image",
-        "button",
         "title",
         "hero",
         "cards",
+        "menu",
+        "login-modal",
         "columns",
-        "fragment"
+        "fragment",
+        "contentfragment",
+        "button",
+        "carousel",
+        "teaser",
+        "articles",
+        "products",
+        "3d-viewer",
+        "search",
+        "services",
+        "video",
+        "embed"
       ]
     }
   ]
