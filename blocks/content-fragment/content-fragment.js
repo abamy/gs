@@ -1,170 +1,134 @@
-import { getMetadata } from '../../scripts/aem.js';
-import { isAuthorEnvironment } from '../../scripts/scripts.js';
-import { getHostname } from '../../scripts/utils.js';
+/*
+ * Content Fragment Block
+ * Fetches and displays content fragments from AEM via GraphQL
+ */
 
 /**
- *
- * @param {Element} block
+ * Loads a content fragment from AEM GraphQL endpoint.
+ * @param {string} path The path to the content fragment
+ * @returns {Object} The content fragment data
  */
-export default async function decorate(block) {
-  // Configuration
-  const CONFIG = {
-    GRAPHQL_QUERY: '/graphql/execute.json/gs/articleByPath',
-    EXCLUDED_THEME_KEYS: new Set(['brandSite', 'brandLogo']),
-  };
+export async function loadFragment(path, url) {
+  if (!path) {
+    return null;
+  }
 
-  const hostnameFromPlaceholders = await getHostname();
-  const hostname = hostnameFromPlaceholders || getMetadata('hostname');
+  // Remove leading slash if present
+  const fragmentPath = path.startsWith('/') ? path : `/${path}`;
 
-  const aemauthorurl = getMetadata('authorurl') || 'https://author-p31104-e170504.adobeaemcloud.com';
-
-  const aempublishurl = aemauthorurl
-    ?.replace('author', 'publish')
-    ?.replace(/\/$/, '');
-
-  // const aempublishurl = getMetadata('publishurl') || '';
-
-  const persistedquery = '/graphql/execute.json/gs/articleByPath';
-
-  // const properties = readBlockConfig(block);
-
-  const contentPath = block
-    .querySelector(':scope div:nth-child(1) > div a')
-    ?.textContent?.trim();
-
-  const variationname =
-    block
-      .querySelector(':scope div:nth-child(2) > div')
-      ?.textContent?.trim()
-      ?.toLowerCase()
-      ?.replace(' ', '_') || 'master';
-  const displayStyle =
-    block.querySelector(':scope div:nth-child(3) > div')?.textContent?.trim() ||
-    '';
-  const alignment =
-    block.querySelector(':scope div:nth-child(4) > div')?.textContent?.trim() ||
-    '';
-  const ctaStyle =
-    block.querySelector(':scope div:nth-child(5) > div')?.textContent?.trim() ||
-    'button';
-
-  block.innerHTML = '';
-  const isAuthor = isAuthorEnvironment();
-
-  // Prepare request configuration based on environment
-  const requestConfig = {
-    url: `${isAuthor ? aemauthorurl : aempublishurl}${CONFIG.GRAPHQL_QUERY};path=${contentPath};variation=${variationname};ts=${Date.now()}`,
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  };
+  // https://publish-p31104-e170504.adobeaemcloud.com/graphql/execute.json/gs/articleByPath;path=/content/dam/gs/fragments/fr/articles/article-1
+  const graphqlEndpoint = `${url}/graphql/execute.json/gs/articleByPath;path=${fragmentPath}`;
 
   try {
-    // Fetch data
-    const response = await fetch(requestConfig.url, {
-      method: requestConfig.method,
-      headers: requestConfig.headers,
-      ...(requestConfig.body && { body: requestConfig.body }),
-    });
-
-    if (!response.ok) {
-      console.error(`error making cf graphql request:${response.status}`, {
-        error: error.message,
-        stack: error.stack,
-        contentPath,
-        variationname,
-        isAuthor,
-      });
-      block.innerHTML = '';
-      return; // Exit early if response is not ok
+    const resp = await fetch(graphqlEndpoint);
+    if (resp.ok) {
+      const data = await resp.json();
+      return data;
     }
-
-    let offer;
-    try {
-      offer = await response.json();
-    } catch (parseError) {
-      console.error('Error parsing offer JSON from response:', {
-        error: error.message,
-        stack: error.stack,
-        contentPath,
-        variationname,
-        isAuthor,
-      });
-      block.innerHTML = '';
-      return;
-    }
-
-    const cfReq = offer?.data?.articleByPath.item;
-
-    if (!cfReq) {
-      console.error(
-        'Error parsing response from GraphQL request - no valid data found',
-        {
-          response: offer,
-          contentPath,
-          variationname,
-        },
-      );
-      block.innerHTML = '';
-      return; // Exit early if no valid data
-    }
-    // Set up block attributes
-    const itemId = `urn:aemconnection:${contentPath}/jcr:content/data/${variationname}`;
-    block.setAttribute('data-aue-type', 'container');
-    const imgUrl = isAuthor
-      ? cfReq.image?._authorUrl
-      : cfReq.image?._publishUrl;
-
-    // Determine the layout style
-    const isImageLeft = displayStyle === 'image-left';
-    const isImageRight = displayStyle === 'image-right';
-    const isImageTop = displayStyle === 'image-top';
-    const isImageBottom = displayStyle === 'image-bottom';
-
-    // Set background image and styles based on layout
-    let bannerContentStyle = '';
-    let bannerDetailStyle = '';
-
-    if (isImageLeft) {
-      // Image-left layout: image on left, text on right
-      bannerContentStyle = `background-image: url(${imgUrl});`;
-    } else if (isImageRight) {
-      // Image-right layout: image on right, text on left
-      bannerContentStyle = `background-image: url(${imgUrl});`;
-    } else if (isImageTop) {
-      // Image-top layout: image on top, text on bottom
-      bannerContentStyle = `background-image: url(${imgUrl});`;
-    } else if (isImageBottom) {
-      // Image-bottom layout: text on top, image on bottom
-      bannerContentStyle = `background-image: url(${imgUrl});`;
-    } else {
-      // Default layout: image as background with gradient overlay (original behavior)
-      bannerDetailStyle = `background-image: linear-gradient(90deg,rgba(0,0,0,0.6), rgba(0,0,0,0.1) 80%) ,url(${imgUrl});`;
-    }
-
-    block.innerHTML = `<div class='banner-content block ${displayStyle}' data-aue-resource=${itemId} data-aue-label=${variationname || 'Elements'} data-aue-type="reference" data-aue-filter="contentfragment" style="${bannerContentStyle}">
-          <div class='banner-detail ${alignment}' style="${bannerDetailStyle}" data-aue-prop="bannerimage" data-aue-label="Main Image" data-aue-type="media" >
-                <p data-aue-prop="title" data-aue-label="Title" data-aue-type="text" class='cftitle'>${cfReq.title ? cfReq.title : ''}</p>
-                <p data-aue-prop="subtitle" data-aue-label="SubTitle" data-aue-type="text" class='cfsubtitle'>${cfReq.subtitle ? cfReq.subtitle : ''}</p>
-                <div data-aue-prop="description" data-aue-label="Description" data-aue-type="richtext" class='cfdescription'><p>${cfReq?.description?.plaintext || ''}</p></div>
-                 <p class="button-container ${ctaStyle}">
-                  <a href="${cfReq?.ctaUrl ? cfReq.ctaUrl : '#'}" data-aue-prop="ctaUrl" data-aue-label="Button Link/URL" data-aue-type="reference"  target="_blank" rel="noopener" data-aue-filter="page" class='button'>
-                    <span data-aue-prop="ctalabel" data-aue-label="Button Label" data-aue-type="text">
-                      ${cfReq?.ctalabel}
-                    </span>
-                  </a>
-                </p>
-            </div>
-            <div class='banner-logo'>
-            </div>
-        </div>`;
+    // eslint-disable-next-line no-console
+    console.error(`Failed to load content fragment from ${graphqlEndpoint}`);
   } catch (error) {
-    console.error('Error rendering content fragment:', {
-      error: error.message,
-      stack: error.stack,
-      contentPath,
-      variationname,
-      isAuthor,
-    });
-    block.innerHTML = '';
+    // eslint-disable-next-line no-console
+    console.error('Error fetching content fragment:', error);
+  }
+
+  return null;
+}
+
+/**
+ * Decorates the content fragment block
+ * @param {Element} block The content fragment block element
+ */
+export default async function decorate(block) {
+  const link = block.querySelector('a');
+  const path = link ? link.getAttribute('href') : block.textContent.trim();
+
+  const aemPublishUrl = 'https://publish-p31104-e170504.adobeaemcloud.com';
+  const aemAuthorUrl = 'https://author-p31104-e170504.adobeaemcloud.com';
+  const url = window?.location?.origin.includes('author') ? `${aemAuthorUrl}` : `${aemPublishUrl}`;
+
+  // Clear the block
+  block.innerHTML = '';
+
+  // Add loading state
+  block.classList.add('loading');
+
+  const fragmentData = await loadFragment(path, url);
+
+  // Remove loading state
+  block.classList.remove('loading');
+
+  if (
+    fragmentData
+    && fragmentData.data
+    && fragmentData.data.articleByPath
+    && fragmentData.data.articleByPath.item
+  ) {
+    const article = fragmentData.data.articleByPath.item;
+
+    // Create article container
+    const articleContainer = document.createElement('div');
+    articleContainer.classList.add('content-fragment-article');
+
+    // Add category if available
+    if (article.category) {
+      const category = document.createElement('span');
+      category.classList.add('content-fragment-category');
+      category.setAttribute('data-aue-label', 'Category');
+      category.setAttribute('data-aue-prop', 'category');
+      category.setAttribute('data-aue-type', 'text');
+      category.textContent = article.category;
+      articleContainer.appendChild(category);
+    }
+
+    // Add title if available
+    if (article.title) {
+      const title = document.createElement('h2');
+      title.classList.add('content-fragment-title');
+      title.setAttribute('data-aue-label', 'Title');
+      title.setAttribute('data-aue-prop', 'title');
+      title.setAttribute('data-aue-type', 'text');
+      title.textContent = article.title;
+      articleContainer.appendChild(title);
+    }
+
+    // Add image if available
+    // eslint-disable-next-line no-underscore-dangle
+    if (article.image && article.image._dynamicUrl) {
+      const imageWrapper = document.createElement('div');
+      imageWrapper.classList.add('content-fragment-image-wrapper');
+
+      const img = document.createElement('img');
+      img.classList.add('content-fragment-image');
+      img.setAttribute('data-aue-label', 'Image');
+      img.setAttribute('data-aue-prop', 'image');
+      img.setAttribute('data-aue-type', 'reference');
+      // eslint-disable-next-line no-underscore-dangle
+      img.src = `${url}${article.image._dynamicUrl}`;
+      img.alt = article.title || 'Content fragment image';
+      img.loading = 'lazy';
+
+      imageWrapper.appendChild(img);
+      articleContainer.appendChild(imageWrapper);
+    }
+
+    // Add description if available
+    if (article.description) {
+      const description = document.createElement('div');
+      description.classList.add('content-fragment-description');
+      description.setAttribute('data-aue-label', 'Description');
+      description.setAttribute('data-aue-prop', 'description');
+      description.setAttribute('data-aue-type', 'richtext');
+      description.innerHTML = article.description.html || article.description;
+      articleContainer.appendChild(description);
+    }
+
+    block.appendChild(articleContainer);
+  } else {
+    // Show error message
+    const error = document.createElement('p');
+    error.classList.add('content-fragment-error');
+    error.textContent = 'Content fragment could not be loaded.';
+    block.appendChild(error);
   }
 }
