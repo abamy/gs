@@ -41,7 +41,7 @@ export async function loadFragment(path, url) {
  */
 export default async function decorate(block) {
   const link = block.querySelector('a');
-  const path = link ? link.getAttribute('href') : block.textContent.trim();
+  const path = link ? link.getAttribute('href').replace('.html', '') : block.textContent.trim();
 
   const aemPublishUrl = 'https://publish-p31104-e170504.adobeaemcloud.com';
   const aemAuthorUrl = 'https://author-p31104-e170504.adobeaemcloud.com';

@@ -4,6 +4,7 @@ import {
   martechEager,
   martechLazy,
   martechDelayed,
+// eslint-disable-next-line import/no-relative-packages
 } from '../plugins/martech/src/index.js';
 
 import {
@@ -59,8 +60,7 @@ export function moveInstrumentation(from, to) {
     [...from.attributes]
       .map(({ nodeName }) => nodeName)
       .filter(
-        (attr) =>
-          attr.startsWith('data-aue-') || attr.startsWith('data-richtext-'),
+        (attr) => attr.startsWith('data-aue-') || attr.startsWith('data-richtext-'),
       ),
   );
 }
@@ -71,8 +71,7 @@ export function moveInstrumentation(from, to) {
 async function loadFonts() {
   await loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
   try {
-    if (!window.location.hostname.includes('localhost'))
-      sessionStorage.setItem('fonts-loaded', 'true');
+    if (!window.location.hostname.includes('localhost')) sessionStorage.setItem('fonts-loaded', 'true');
   } catch (e) {
     // do nothing
   }

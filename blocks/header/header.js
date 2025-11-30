@@ -62,13 +62,10 @@ function extractLoginModalData(fragment) {
   const loginModalBlock = fragment.querySelector('.login-modal.block');
   const items = loginModalBlock.querySelectorAll(':scope > div');
   const title = items[0]?.querySelector('p')?.textContent.trim() || 'Login';
-  const usernameLabel =
-    items[1]?.querySelector('p')?.textContent.trim() || 'Username';
-  const profileTypeLabel =
-    items[2]?.querySelector('p')?.textContent.trim() || 'Profile Type';
+  const usernameLabel = items[1]?.querySelector('p')?.textContent.trim() || 'Username';
+  const profileTypeLabel = items[2]?.querySelector('p')?.textContent.trim() || 'Profile Type';
   const optionsText = items[3]?.querySelector('p')?.textContent.trim() || '';
-  const cancelButtonLabel =
-    items[4]?.querySelector('p')?.textContent.trim() || 'Cancel';
+  const cancelButtonLabel = items[4]?.querySelector('p')?.textContent.trim() || 'Cancel';
 
   const profileOptions = optionsText
     .split(',')

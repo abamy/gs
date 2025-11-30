@@ -51,7 +51,7 @@ export default function decorate(block) {
           const imageElement = document.getElementById(`${blockId}-image`);
           // eslint-disable-next-line no-underscore-dangle
           const imagePath = `https://publish-p31104-e170504.adobeaemcloud.com${offerContent.image._path}`;
-          //const imagePath = getDeliveryUrl(offerContent.image._path, '3590x1000');
+          // const imagePath = getDeliveryUrl(offerContent.image._path, '3590x1000');
           imageElement.innerHTML = `
             <picture>
               <source media="(min-width: 600px)" type="image/webp" srcset="${imagePath}?width=750&amp;format=webply&amp;optimize=medium">
