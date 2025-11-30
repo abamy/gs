@@ -66,9 +66,18 @@ export default async function decorate(block) {
   ) {
     const article = fragmentData.data.articleByPath.item;
 
+    // Get variation name from block config or default to 'master'
+    const variationName = block.dataset.contentfragmentvariation || 'master';
+
+    // Create the URN for Universal Editor
+    const itemId = `urn:aemconnection:${path}/jcr:content/data/${variationName}`;
+
     // Create article container
     const articleContainer = document.createElement('div');
     articleContainer.classList.add('content-fragment-article');
+    articleContainer.setAttribute('data-aue-resource', itemId);
+    articleContainer.setAttribute('data-aue-type', 'reference');
+    articleContainer.setAttribute('data-aue-label', 'Content Fragment');
 
     // Add category if available
     if (article.category) {
