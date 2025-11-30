@@ -1,4 +1,5 @@
 import { readBlockConfig, createOptimizedPicture } from '../../scripts/aem.js';
+import { getDeliveryUrl } from '../../scripts/utils.js';
 
 export default function decorate(block) {
   const config = readBlockConfig(block);
@@ -50,8 +51,9 @@ export default function decorate(block) {
 
           const imageElement = document.getElementById(`${blockId}-image`);
           // eslint-disable-next-line no-underscore-dangle
-          const imagePath = `https://publish-p31104-e170504.adobeaemcloud.com${offerContent.image._path}`;
-          // const imagePath = getDeliveryUrl(offerContent.image._path, '3590x1000');
+          // const imagePath = `https://publish-p31104-e170504.adobeaemcloud.com${offerContent.image._path}`;
+          // eslint-disable-next-line no-underscore-dangle
+          const imagePath = getDeliveryUrl(offerContent.image._path.replace('/content/dam/gs', ''), '3590x1000');
           imageElement.innerHTML = `
             <picture>
               <source media="(min-width: 600px)" type="image/webp" srcset="${imagePath}?width=750&amp;format=webply&amp;optimize=medium">

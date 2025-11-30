@@ -15,10 +15,9 @@ async function applyChanges(event) {
   // redecorate default content and blocks on patches (in the properties rail)
   const { detail } = event;
 
-  const resource =
-    detail?.request?.target?.resource || // update, patch components
-    detail?.request?.target?.container?.resource || // update, patch, add to sections
-    detail?.request?.to?.container?.resource; // move in sections
+  const resource = detail?.request?.target?.resource // update, patch components
+    || detail?.request?.target?.container?.resource // update, patch, add to sections
+    || detail?.request?.to?.container?.resource; // move in sections
   if (!resource) return false;
   const updates = detail?.response?.updates;
   if (!updates.length) return false;
@@ -54,9 +53,8 @@ async function applyChanges(event) {
       return true;
     }
 
-    const block =
-      element.parentElement?.closest('.block[data-aue-resource]') ||
-      element?.closest('.block[data-aue-resource]');
+    const block = element.parentElement?.closest('.block[data-aue-resource]')
+      || element?.closest('.block[data-aue-resource]');
     if (block) {
       const blockResource = block.getAttribute('data-aue-resource');
       const newBlock = parsedUpdate.querySelector(
@@ -115,13 +113,11 @@ function attachEventListners(main) {
     'aue:content-move',
     'aue:content-remove',
     'aue:content-copy',
-  ].forEach((eventType) =>
-    main?.addEventListener(eventType, async (event) => {
-      event.stopPropagation();
-      const applied = await applyChanges(event);
-      if (!applied) window.location.reload();
-    }),
-  );
+  ].forEach((eventType) => main?.addEventListener(eventType, async (event) => {
+    event.stopPropagation();
+    const applied = await applyChanges(event);
+    if (!applied) window.location.reload();
+  }));
 }
 
 attachEventListners(document.querySelector('main'));
@@ -156,15 +152,15 @@ const path = url
 metaPreview.content = `http://main--${siteName}--abamy.aem.page${path}`;
 document.head.appendChild(metaPreview);
 
-if (!url.includes('/master/')) {
-  document.querySelectorAll('[data-aue-type]').forEach((el) => {
-    if (
-      el.tagName.toLowerCase() === 'body' ||
-      el.getAttribute('data-aue-type') === 'container' ||
-      el.getAttribute('data-aue-type') === 'column'
-    ) {
-      el.removeAttribute('data-aue-resource');
-      el.removeAttribute('data-aue-type');
-    }
-  });
-}
+// if (!url.includes('/master/')) {
+//   document.querySelectorAll('[data-aue-type]').forEach((el) => {
+//     if (
+//       el.tagName.toLowerCase() === 'body' ||
+//       el.getAttribute('data-aue-type') === 'container' ||
+//       el.getAttribute('data-aue-type') === 'column'
+//     ) {
+//       el.removeAttribute('data-aue-resource');
+//       el.removeAttribute('data-aue-type');
+//     }
+//   });
+// }
