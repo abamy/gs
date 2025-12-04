@@ -203,7 +203,7 @@
         "name": "reference",
         "label": "Reference",
         "validation": {
-          "rootPath": "/content/dam"
+          "rootPath": "/content/dam/gs"
         }
       }
     ]
@@ -253,9 +253,12 @@
       },
       {
         "component": "aem-content-fragment",
-        "valueType": "string",
+        "valueType": "reference",
         "name": "contentFragment",
-        "label": "Content Fragment"
+        "label": "Content Fragment",
+        "validation": {
+          "rootPath": "/content/dam/gs"
+        }
       },
       {
         "component": "tab",
