@@ -27,9 +27,8 @@
         },
         {
           "component": "aem-content-fragment",
-          "valueType": "reference",
-          "name": "contentFragment",
-          "label": "Content Fragment",
+          "name": "reference",
+          "label": "Reference",
           "validation": {
             "rootPath": "/content/dam/gs"
           }
