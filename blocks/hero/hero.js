@@ -74,12 +74,12 @@ function updateHeroContent(source, elements, showButtonIcon = false, useDynamicM
 export default async function decorate(block) {
   const config = readBlockConfig(block);
   const blockId = `hero-${Math.random().toString(36).substr(2, 9)}`;
-
+  const contentfragment = block.querySelector('a').title;
   // Fetch content fragment if specified
   let fragmentData = null;
   let fragmentPath = null;
-  if (config.contentfragment) {
-    fragmentPath = config.contentfragment.replace(/^https?:\/\/[^/]+/, '');
+  if (contentfragment) {
+    fragmentPath = contentfragment.replace(/^https?:\/\/[^/]+/, '');
     fragmentPath = fragmentPath.replace(/\.(html|json)$/, '');
     fragmentData = await fetchContentFragmentByPath(fragmentPath);
   }
