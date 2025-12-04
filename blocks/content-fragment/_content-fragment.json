@@ -24,6 +24,7 @@
           "component": "aem-content-fragment",
           "name": "reference",
           "label": "Reference",
+          "valueType": "string",
           "validation": {
             "rootPath": "/content/dam/gs"
           }

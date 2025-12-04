@@ -3,7 +3,7 @@
  * Fetches and displays content fragments from AEM via GraphQL
  */
 
-import { getMetadata } from '../../scripts/aem.js';
+import { getMetadata, readBlockConfig } from '../../scripts/aem.js';
 
 /**
  * Loads a content fragment from AEM GraphQL endpoint.
@@ -42,6 +42,7 @@ export async function loadFragment(path, url) {
  * @param {Element} block The content fragment block element
  */
 export default async function decorate(block) {
+  const config = readBlockConfig(block);
   const link = block.querySelector('a');
   const path = link ? link.getAttribute('href').replace('.html', '') : block.textContent.trim();
 
