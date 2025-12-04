@@ -16,7 +16,7 @@ function extractArticlesFromBlock(block) {
         category,
         description,
         picture: picture ? picture.outerHTML : '',
-        index
+        index,
       });
     }
   });
@@ -43,7 +43,7 @@ function buildArticleCard(article) {
 }
 
 export default async function decorate(block) {
-  let articles = extractArticlesFromBlock(block);
+  const articles = extractArticlesFromBlock(block);
 
   if (articles.length === 0) {
     const emptyContent = document.createRange().createContextualFragment(`
@@ -54,7 +54,7 @@ export default async function decorate(block) {
     return;
   }
 
-  const articlesHTML = articles.map(article => buildArticleCard(article)).join('');
+  const articlesHTML = articles.map((article) => buildArticleCard(article)).join('');
 
   const content = document.createRange().createContextualFragment(`
     <div class="articles-grid">

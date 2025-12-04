@@ -29,7 +29,7 @@ function extractProductsFromBlock(block) {
         description,
         price,
         picture: picture ? picture.outerHTML : '',
-        index
+        index,
       });
     }
   });
@@ -73,7 +73,7 @@ export default async function decorate(block) {
   const lang = getLanguageFromUrl();
   const resultsText = await getTranslation('Results', lang);
 
-  const productsHTML = products.map(product => buildProductCard(product)).join('');
+  const productsHTML = products.map((product) => buildProductCard(product)).join('');
 
   const content = document.createRange().createContextualFragment(`
     <div class="products-results-count"></div>
@@ -103,15 +103,15 @@ export default async function decorate(block) {
     const lowerSearchTerm = searchTerm.toLowerCase();
     let visibleCount = 0;
 
-    allProductCards.forEach(card => {
+    allProductCards.forEach((card) => {
       const cardTitle = card.querySelector('.product-title')?.textContent.toLowerCase() || '';
       const cardDescription = card.querySelector('.product-description')?.textContent.toLowerCase() || '';
       const cardPrice = card.querySelector('.product-price')?.textContent.toLowerCase() || '';
 
-      const matchesSearch = !lowerSearchTerm ||
-        cardTitle.includes(lowerSearchTerm) ||
-        cardDescription.includes(lowerSearchTerm) ||
-        cardPrice.includes(lowerSearchTerm);
+      const matchesSearch = !lowerSearchTerm
+        || cardTitle.includes(lowerSearchTerm)
+        || cardDescription.includes(lowerSearchTerm)
+        || cardPrice.includes(lowerSearchTerm);
 
       if (matchesSearch) {
         card.style.display = '';

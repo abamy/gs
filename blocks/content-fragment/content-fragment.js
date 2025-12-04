@@ -3,6 +3,8 @@
  * Fetches and displays content fragments from AEM via GraphQL
  */
 
+import { getMetadata } from '../../scripts/aem.js';
+
 /**
  * Loads a content fragment from AEM GraphQL endpoint.
  * @param {string} path The path to the content fragment
@@ -43,8 +45,8 @@ export default async function decorate(block) {
   const link = block.querySelector('a');
   const path = link ? link.getAttribute('href').replace('.html', '') : block.textContent.trim();
 
-  const aemPublishUrl = 'https://publish-p31104-e170504.adobeaemcloud.com';
-  const aemAuthorUrl = 'https://author-p31104-e170504.adobeaemcloud.com';
+  const aemPublishUrl = getMetadata('publish');
+  const aemAuthorUrl = getMetadata('author');
   const url = window?.location?.origin.includes('author') ? `${aemAuthorUrl}` : `${aemPublishUrl}`;
 
   // Clear the block

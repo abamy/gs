@@ -1,6 +1,5 @@
 import {
   initMartech,
-  updateUserConsent,
   martechEager,
   martechLazy,
   martechDelayed,
@@ -121,7 +120,7 @@ async function loadEager(doc) {
       // The `debugEnabled` flag is automatically set to true on localhost and .page URLs.
       // The `defaultConsent` is automatically set to "pending".
       defaultConsent: 'in',
-      onBeforeEventSend: (payload) => {
+      onBeforeEventSend: () => {
         // This callback allows you to modify the payload before it's sent.
         // Return false to prevent the event from being sent.
       },
