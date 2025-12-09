@@ -130,7 +130,7 @@ async function loadEager(doc) {
     },
     // 2. Library Configuration
     {
-      personalization: !!getMetadata('target') || isConsentGiven,
+      personalization: false,
       launchUrls: [
         'https://assets.adobedtm.com/0e50a3fdd0de/d27b4e4cc898/launch-9234fc2989d2.min.js',
       ],
