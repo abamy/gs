@@ -1,33 +1,40 @@
-.columns > div {
+.columns>div {
   display: flex;
   flex-direction: column;
 }
 
 .columns img {
   width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
-.columns > div > div {
+.columns>div>div {
   order: 1;
 }
 
-.columns > div > .columns-img-col {
+.columns>div>.columns-img-col {
   order: 0;
 }
 
-.columns > div > .columns-img-col img {
+.columns>div>.columns-img-col img {
   display: block;
 }
 
-@media (width >= 900px) {
-  .columns > div {
+@media (width >=900px) {
+  .columns>div {
     align-items: center;
     flex-direction: unset;
     gap: 24px;
   }
 
-  .columns > div > div {
+  .columns>div>div {
     flex: 1;
     order: unset;
+  }
+
+  .columns img {
+    height: 400px;
   }
 }

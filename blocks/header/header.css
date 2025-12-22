@@ -72,31 +72,27 @@
     align-items: center;
     gap: 0.5rem;
     background-color: transparent;
-    border: 0.5px solid var(--primary-color);
-    color: var(--primary-color);
-    border-radius: 20px;
-    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 6px;
+    padding: 6px 12px;
     font-weight: 500;
-    font-size: medium;
+    font-size: 14px;
+    line-height: 1.5;
     cursor: pointer;
     transition: var(--transition);
-    height: 35px;
     box-sizing: border-box;
 }
 
 .login-btn:hover {
-    background-color: var(--primary-color);
-    color: var(--light-color);
-    transform: none;
-}
-
-.login-btn:hover img {
-    filter: brightness(0) invert(1);
+    background-color: var(--bg-light);
+    border-color: var(--muted-text);
+    color: var(--muted-text);
 }
 
 .login-btn img {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
 }
 
 /* Locale Switcher */
@@ -109,35 +105,35 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     background-color: transparent;
-    border: 0.5px solid var(--primary-color);
-    color: var(--primary-color);
-    border-radius: 20px;
-    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 6px;
+    padding: 6px 12px;
     font-weight: 500;
-    font-size: medium;
+    font-size: 14px;
+    line-height: 1.5;
     cursor: pointer;
     transition: var(--transition);
     outline: none;
-    height: 35px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    line-height: 1;
 }
 
 .locale-select:hover {
-    background-color: var(--primary-color);
-    color: var(--light-color);
+    background-color: var(--bg-light);
+    border-color: var(--muted-text);
+    color: var(--muted-text);
 }
 
 .locale-select:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(0, 95, 169, 0.15);
+    border-color: var(--text-color);
+    box-shadow: none;
 }
 
 .locale-select option {
-    background-color: var(--light-color);
-    color: var(--dark-color);
+    background-color: var(--white);
+    color: var(--text-color);
     padding: 0.75rem;
     font-weight: 500;
 }
@@ -231,23 +227,24 @@
 }
 
 .modal-close {
-    background: var(--light-color);
-    border: 0.5px solid var(--primary-color);
-    border-radius: 20px;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
     width: 32px;
     height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.25rem;
-    color: var(--dark-gray);
+    color: var(--muted-text);
     cursor: pointer;
     transition: var(--transition);
 }
 
 .modal-close:hover {
-    background: var(--gray-color);
-    color: var(--dark-color);
+    background: var(--bg-light);
+    border-color: var(--muted-text);
+    color: var(--muted-text);
 }
 
 .modal-body {
@@ -313,36 +310,37 @@
 }
 
 .btn {
-    padding: 0.875rem 1.5rem;
-    font-size: 0.9375rem;
+    padding: 8px 16px;
+    font-size: 14px;
     font-weight: 500;
-    border-radius: 8px;
+    line-height: 1.5;
+    border-radius: 6px;
     cursor: pointer;
     transition: var(--transition);
-    border: none;
+    border: 1px solid;
 }
 
 .btn-cancel {
-    background-color: var(--bg-overlay);
-    background: var(--light-color);
-    border: 0.5px solid var(--primary-color);
-    border-radius: 20px;
-    color: var(--dark-color);
+    background-color: var(--white);
+    border-color: var(--border-color);
+    color: var(--text-color);
 }
 
 .btn-cancel:hover {
-    background-color: var(--gray-color);
+    background-color: var(--bg-light);
+    border-color: var(--muted-text);
+    color: var(--muted-text);
 }
 
 .btn-login {
     background-color: var(--primary-color);
-    color: var(--light-color);
-    font-weight: 600;
+    border-color: var(--primary-color);
+    color: var(--white);
 }
 
 .btn-login:hover {
-    background-color: var(--info-color-dark);
-    box-shadow: 0 6px 12px rgba(0, 95, 169, 0.25);
+    background-color: var(--muted-text);
+    border-color: var(--muted-text);
 }
 
 /* Responsive styles */
@@ -403,6 +401,6 @@
     }
 
     .login-btn {
-        padding: 0.5rem;
+        padding: 6px 8px;
     }
 }
